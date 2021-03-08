@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -53,9 +54,9 @@ class LoginController extends Controller
 
         if (auth()->attempt($data)) {
             if (auth()->user()->hasRole('Admin')) {
-                return redirect()->route('admin.dashboard.index')->with(['success' => 'Welcome back ' . $username]);
+                return redirect()->route('dashboard.index')->with(['success' => 'Welcome back ' . $username]);
             }
-            return redirect()->route('admin.dashboard.index')->with(['success' => 'Welcome back ' . $username]);
+            return redirect()->route('dashboard.index')->with(['success' => 'Welcome back ' . $username]);
         } else {
             return redirect()->back()->with(['error' => 'Invalid email or password']);
         }
