@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::group(['middleware' => ['role:Administrator'], 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::group(['middleware' => ['role:Administrator'], 'prefix' => 'admin'], function () {
         Route::resource('dashboard', DashboardController::class);
     });
 });
