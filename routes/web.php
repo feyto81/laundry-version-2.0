@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +16,11 @@ use App\Http\Controllers\Admin\DashboardController;
 
 Auth::routes();
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('dashboard.index');
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::group(['middleware' => ['role:admin'], 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::group(['middleware' => ['role:admin'], 'prefix' => 'admin'], function () {
         Route::resource('dashboard', DashboardController::class);
     });
 });
