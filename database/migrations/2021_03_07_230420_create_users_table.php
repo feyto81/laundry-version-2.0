@@ -18,7 +18,6 @@ class CreateUsersTable extends Migration
             $table->string('name', 100);
             $table->string('username', 30);
             $table->string('email');
-            $table->string('address');
             $table->string('password');
             $table->string('photo');
             $table->unsignedBigInteger('outlet_id');
