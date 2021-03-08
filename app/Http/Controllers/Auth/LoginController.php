@@ -51,9 +51,9 @@ class LoginController extends Controller
 
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         $data = array($fieldType => $input['username'], 'password' => $input['password']);
-
         if (auth()->attempt($data)) {
-            if (auth()->user()->hasRole('Admin')) {
+            $username = auth()->user()->username;
+            if (auth()->user()->hasRole('Administrator')) {
                 return redirect()->route('dashboard.index')->with(['success' => 'Welcome back ' . $username]);
             }
             return redirect()->route('dashboard.index')->with(['success' => 'Welcome back ' . $username]);
