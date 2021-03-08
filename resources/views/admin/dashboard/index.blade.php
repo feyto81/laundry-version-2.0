@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-@yield('titile','Dashboard | Laundry Application')
+@section('title','Dashboard | Laundry Application')
 @section('content')
 <div class="page-content">
     <div class="container-fluid">
