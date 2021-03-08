@@ -53,14 +53,11 @@ class LoginController extends Controller
 
         if (auth()->attempt($data)) {
             if (auth()->user()->hasRole('Admin')) {
-                return redirect()->route('admin.dashboard.index');
+                return redirect()->route('admin.dashboard.index')->with(['success' => 'Welcome back ' . $username]);
             }
-            return redirect()->route('admin.dashboard.index');
+            return redirect()->route('admin.dashboard.index')->with(['success' => 'Welcome back ' . $username]);
         } else {
-            return redirect()->back()->with([
-                'message_type' => 'danger',
-                'message' => 'Username/Password Salah!'
-            ]);
+            return redirect()->back()->with(['error' => 'Invalid email or password']);
         }
     }
 }
