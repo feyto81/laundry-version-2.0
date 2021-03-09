@@ -77,7 +77,7 @@
                                         @csrf
                                         <div class="mb-3">
                                             <label for="email" class="form-label">{{ __('Username') }}</label>
-                                            <input type="username" class="form-control" name="username" id="email" @if(old('username')) value="{{ old('username') }}" @else value="" @endif required autocomplete="username" autofocus>
+                                            <input type="username" class="form-control" name="username" id="email" @if(old('username')) value="{{ old('username') }}" @else value="" @endif autofocus>
                                         </div>
                 
                                         <div class="mb-3">
@@ -122,6 +122,7 @@
         <script src="{{asset('assets/libs/simplebar/simplebar.min.js')}}"></script>
         <script src="{{asset('assets/libs/node-waves/waves.min.js')}}"></script>
         <script src="{{asset('assets/js/app.js')}}"></script>
+        <script src='https://www.google.com/recaptcha/api.js'></script>
         <script>
             $(document).ready(function() {
                 window.setTimeout(function() {

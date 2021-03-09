@@ -20,7 +20,7 @@
                         <ul class="metismenu list-unstyled" id="side-menu">
                             <li class="menu-title" key="t-menu">Navigation</li>
                             <li>
-                                <a href="#" class="waves-effect">
+                                <a href="{{route('dashboard.index')}}" class="waves-effect">
                                     <i class="bx bx-home-circle"></i>
                                     <span key="t-dashboards">Dashboard</span>
                                 </a>

@@ -46,6 +46,7 @@ class LoginController extends Controller
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required',
+            'g-recaptcha-response' => 'required|captcha',
 
         ]);
 
