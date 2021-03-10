@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 
@@ -14,11 +15,13 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Auth::routes();
+// Auth::routes();
 Route::get('/', function () {
     return redirect()->route('dashboard.index');
 });
 
+Route::get('admn/login', [LoginController::class, 'showFormLogin'])->name('login');
+Route::get('login', [LoginController::class, 'login']);
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => ['role:Administrator'], 'prefix' => 'admin'], function () {
         Route::resource('dashboard', DashboardController::class);

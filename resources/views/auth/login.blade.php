@@ -76,12 +76,12 @@
                                     <form class="form-horizontal" action="{{route('login')}}" method="POST">
                                         @csrf
                                         <div class="mb-3">
-                                            <label for="email" class="form-label">{{ __('Username') }}</label>
+                                            <label for="username" class="form-label">Username</label>
                                             <input type="username" class="form-control" name="username" id="email" @if(old('username')) value="{{ old('username') }}" @else value="" @endif autofocus>
                                         </div>
                 
                                         <div class="mb-3">
-                                            <label class="form-label" for="password">{{ __('Password') }}</label>
+                                            <label class="form-label" for="password">Password</label>
                                             <div class="input-group auth-pass-inputgroup">
                                                 <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon" autocomplete="current-password">
                                                 <button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
@@ -94,7 +94,7 @@
                                         <div class="form-check">
                                             <input class="form-check-input" name="remember" type="checkbox" id="remember-check" {{ old('remember') ? 'checked' : '' }}>
                                             <label class="form-check-label" for="remember-check">
-                                                {{ __('Remember Me') }}
+                                                Remember Me
                                             </label>
                                         </div>
                                         
