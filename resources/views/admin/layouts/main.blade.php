@@ -42,8 +42,8 @@
                                     <span key="t-crypto">Member</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="#" key="t-wallet">Add New Member</a></li>
-                                    <li><a href="#" key="t-buy">List Member</a></li>
+                                    <li><a href="{{route('member.create')}}" key="t-wallet">Add New Member</a></li>
+                                    <li><a href="{{route('member.index')}}" key="t-buy">List Member</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -52,8 +52,8 @@
                                     <span key="t-crypto">Paket</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="#" key="t-wallet">Add New Paket</a></li>
-                                    <li><a href="#" key="t-buy">List Paket</a></li>
+                                    <li><a href="{{route('paket.create')}}" key="t-wallet">Add New Paket</a></li>
+                                    <li><a href="{{route('paket.index')}}" key="t-buy">List Paket</a></li>
                                 </ul>
                             </li>
                             <li class="menu-title">Navigation</li>

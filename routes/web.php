@@ -4,7 +4,9 @@ use App\Http\Controllers\CmsUsersController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OutletController;
+use App\Http\Controllers\PaketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('outlet/delete/{id}', [OutletController::class, 'destroy']);
         Route::get('outlet/edit/{id}', [OutletController::class, 'edit']);
         Route::post('outlet/update/{id}', [OutletController::class, 'update']);
+
+        Route::resource('member', MemberController::class);
+        Route::get('member/delete/{id}', [MemberController::class, 'destroy']);
+        Route::get('member/edit/{id}', [MemberController::class, 'edit']);
+        Route::post('member/update/{id}', [MemberController::class, 'update']);
+
+        Route::resource('paket', PaketController::class);
+        Route::get('paket/delete/{id}', [PaketController::class, 'destroy']);
+        Route::get('paket/edit/{id}', [PaketController::class, 'edit']);
+        Route::post('paket/update/{id}', [PaketController::class, 'update']);
 
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     });
