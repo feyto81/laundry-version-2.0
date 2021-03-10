@@ -64,8 +64,8 @@
                                     <span key="t-crypto">Transaction</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="#" key="t-wallet">Add New Order</a></li>
-                                    <li><a href="#" key="t-buy">Order List</a></li>
+                                    <li><a href="{{route('transaction.create')}}" key="t-wallet">Add New Order</a></li>
+                                    <li><a href="{{route('transaction.index')}}" key="t-buy">Order List</a></li>
                                 </ul>
                             </li>
                             <li class="menu-title" key="t-menu">Administrator</li>

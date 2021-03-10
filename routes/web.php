@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\PaketController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('paket/delete/{id}', [PaketController::class, 'destroy']);
         Route::get('paket/edit/{id}', [PaketController::class, 'edit']);
         Route::post('paket/update/{id}', [PaketController::class, 'update']);
+
+        Route::resource('transaction', TransactionController::class);
 
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     });
