@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-12">
                 
-                <a href="{{route('admin.cms_users.index')}}" class="button"><i class="bx bx-arrow-back label-icon"></i> &nbsp;&nbsp;Back To List User</a>
+                <a href="{{route('cms_users.index')}}" class="button"><i class="bx bx-arrow-back label-icon"></i> &nbsp;&nbsp;Back To List User</a>
                 <br>
                 <br>
                 @if ($errors->any())
@@ -47,7 +47,7 @@
         </div>
         <br>
         <div class="row">
-            <form action="{{route('admin.cms_users.store')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('cms_users.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="col-12">
                     <div class="row">
@@ -98,10 +98,10 @@
                                     <div class="mb-3 row">
                                         <label for="outlet_id" class="col-md-2 col-form-label">Privilege</label>
                                         <div class="col-md-10">
-                                            <select class="form-select select2" id="level_id" name="level_id">
+                                            <select class="form-select select2" id="role" name="role">
                                                 <option disabled selected>Select</option>
-                                                @foreach ($level as $row)
-                                                <option value="{{$row->id}}">{{$row->name}}</option>
+                                                @foreach($roles as $role)
+                                                <option value="{{ $role->name }}" {{ $role->name == old('role') ? 'selected' : ''}}>{{ $role->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -129,7 +129,7 @@
                                     <br>
                                     <button name="submit" type="submit" class="btn btn-primary" value="save">Save</button>
                                     <button name="submit" type="submit" class="btn btn-primary" value="more">Save & More</button>
-                                    <a href="{{route('admin.cms_users.index')}}" class="btn btn-danger">Cancel</a>
+                                    <a href="{{route('cms_users.index')}}" class="btn btn-danger">Cancel</a>
                                 </div>
                             </div>
                         </div>

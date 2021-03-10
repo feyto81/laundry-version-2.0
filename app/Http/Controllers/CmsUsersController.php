@@ -8,6 +8,7 @@ use App\Models\Outlet;
 use Hash;
 use File;
 use DB;
+use Spatie\Permission\Models\Role;
 
 class CmsUsersController extends Controller
 {
@@ -24,8 +25,8 @@ class CmsUsersController extends Controller
         $data['page_title'] = "User Management";
         $data['page_sub_title'] = "Add New User";
         $data['outlet'] = Outlet::all();
-        $data['level'] = Level::all();
-        return view('user.add', $data);
+        $data['roles'] = Role::all();
+        return view('admin.user.add', $data);
     }
     public function store(Request $request)
     {
@@ -36,7 +37,7 @@ class CmsUsersController extends Controller
             'password' => 'required|min:5|max:20',
             'photo' => 'required',
             'outlet_id' => 'required',
-            'level_id' => 'required',
+            'role' => 'required|string|exists:roles,name',
             'status' => 'required',
         ]);
         $user = new User;
@@ -45,7 +46,7 @@ class CmsUsersController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->outlet_id = $request->outlet_id;
-        $user->level_id = $request->level_id;
+
         $user->status = $request->status;
         $photo = $request->file('photo');
         $tujuan_upload = 'avatar';
@@ -53,10 +54,11 @@ class CmsUsersController extends Controller
         $photo->move($tujuan_upload, $photo_name);
         $user->photo = $photo_name;
         $user->save();
+        $user->syncRoles([$request->role]);
         if ($request->submit == "more") {
-            return redirect()->route('admin.cms_users.create')->with(['success' => 'User has been saved !']);
+            return redirect()->route('cms_users.create')->with(['success' => 'User has been saved !']);
         } else {
-            return redirect()->route('admin.cms_users.index')->with(['success' => 'User has been saved']);
+            return redirect()->route('cms_users.index')->with(['success' => 'User has been saved']);
         };
     }
 
@@ -72,9 +74,9 @@ class CmsUsersController extends Controller
         $data['page_title'] = "User Management";
         $data['page_sub_title'] = "Edit User";
         $data['outlet'] = Outlet::all();
-        $data['level'] = Level::all();
+        $data['roles'] = Role::all();
         $data['user'] = User::findOrFail($id);
-        return view('user.edit', $data);
+        return view('admin.user.edit', $data);
     }
     public function update(Request $request, $id)
     {
@@ -83,7 +85,7 @@ class CmsUsersController extends Controller
             'username' => 'required|min:2|max:20',
             'email' => 'required|email',
             'outlet_id' => 'required',
-            'level_id' => 'required',
+            'role' => 'required|string|exists:roles,name',
             'status' => 'required',
         ]);
         $user = User::findOrFail($id);
@@ -91,7 +93,6 @@ class CmsUsersController extends Controller
         $user->username = $request->username;
         $user->email = $request->email;
         $user->outlet_id = $request->outlet_id;
-        $user->level_id = $request->level_id;
         $user->status = $request->status;
         if ($request->get('password') != '') {
             $user->password = Hash::make($request->password);
@@ -106,9 +107,10 @@ class CmsUsersController extends Controller
         }
 
         $result = $user->save();
+        $user->syncRoles([$request->role]);
         // dd($user);
         if ($result) {
-            return redirect()->route('admin.cms_users.index')->with(['success' => 'User has been updated']);
+            return redirect()->route('cms_users.index')->with(['success' => 'User has been updated']);
         } else {
             return redirect()->back();
         }
@@ -119,7 +121,7 @@ class CmsUsersController extends Controller
         DB::table('users')
             ->where('id', $id)
             ->update(['status' => 1]);
-        return redirect()->route('admin.cms_users.index')->with(['success' => 'User has been unactive']);
+        return redirect()->route('cms_users.index')->with(['success' => 'User has been unactive']);
     }
 
     public function unactive($id)
@@ -127,6 +129,6 @@ class CmsUsersController extends Controller
         DB::table('users')
             ->where('id', $id)
             ->update(['status' => 0]);
-        return redirect()->route('admin.cms_users.index')->with(['success' => 'User has been active']);
+        return redirect()->route('cms_users.index')->with(['success' => 'User has been active']);
     }
 }
