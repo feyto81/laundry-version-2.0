@@ -32,8 +32,8 @@
                                     <span key="t-crypto">Outlet</span>
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="#" key="t-wallet">Add New Outlet</a></li>
-                                    <li><a href="#" key="t-buy">List Outlet</a></li>
+                                    <li><a href="{{route('outlet.create')}}" key="t-wallet">Add New Outlet</a></li>
+                                    <li><a href="{{route('outlet.index')}}" key="t-buy">List Outlet</a></li>
                                 </ul>
                             </li>
                             <li>
