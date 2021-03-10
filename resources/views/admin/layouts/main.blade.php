@@ -76,7 +76,7 @@
                                 </a>
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="#" key="t-wallet">Add New User</a></li>
-                                    <li><a href="#" key="t-buy">List User</a></li>
+                                    <li><a href="{{route('cms_users.index')}}" key="t-buy">List User</a></li>
                                 </ul>
                             </li>
                             <li>

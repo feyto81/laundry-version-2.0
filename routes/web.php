@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CmsUsersController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
@@ -25,6 +26,13 @@ Route::post('login', [LoginController::class, 'login']);
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => ['role:Administrator'], 'prefix' => 'admin'], function () {
         Route::resource('dashboard', DashboardController::class);
+        Route::resource('cms_users', CmsUsersController::class);
+        Route::get('cms_users/delete/{id}', [CmsUsersController::class, 'destroy']);
+        Route::post('cms_users/update/{id}', [CmsUsersController::class, 'update']);
+        Route::get('cms_users/edit/{id}', [CmsUsersController::class, 'edit']);
+        Route::post('cms_users/update/{id}', [CmsUsersController::class, 'update']);
+        Route::get('cms_users/active/{id}', [CmsUsersController::class, 'active']);
+        Route::get('cms_users/unactive/{id}', [CmsUsersController::class, 'unactive']);
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     });
 });
