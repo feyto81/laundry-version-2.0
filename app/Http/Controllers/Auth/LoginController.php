@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -39,6 +40,15 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function showFormLogin()
+    {
+        if (Auth::check()) { // true sekalian session field di users nanti bisa dipanggil via Auth
+            //Login Success
+            return redirect()->route('dashboard.index');
+        }
+        return view('auth.login');
+    }
+
     public function login(Request $request)
     {
         $input = $request->all();
@@ -46,7 +56,7 @@ class LoginController extends Controller
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required',
-            'g-recaptcha-response' => 'required|captcha',
+            // 'g-recaptcha-response' => 'required|captcha',
 
         ]);
 
@@ -61,5 +71,11 @@ class LoginController extends Controller
         } else {
             return redirect()->back()->with(['error' => 'Invalid email or password']);
         }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login')->with(['success' => 'You have successfully logged out']);
     }
 }

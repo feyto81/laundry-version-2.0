@@ -20,10 +20,11 @@ Route::get('/', function () {
     return redirect()->route('dashboard.index');
 });
 
-Route::get('admn/login', [LoginController::class, 'showFormLogin'])->name('login');
-Route::get('login', [LoginController::class, 'login']);
+Route::get('admin/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => ['role:Administrator'], 'prefix' => 'admin'], function () {
         Route::resource('dashboard', DashboardController::class);
+        Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     });
 });
