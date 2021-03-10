@@ -22,6 +22,7 @@ class UsersTableSeeder extends Seeder
         $init->password = Hash::make("123456");
         $init->photo = "NULL";
         $init->outlet_id = "1";
+        $init->status = "1";
         $init->save();
         $init->assignRole('Administrator');
 
@@ -32,6 +33,7 @@ class UsersTableSeeder extends Seeder
         $init->password = Hash::make("123456");
         $init->photo = "NULL";
         $init->outlet_id = "1";
+        $init->status = "0";
         $init->save();
         $init->assignRole('Kasir');
 
@@ -42,6 +44,7 @@ class UsersTableSeeder extends Seeder
         $init->password = Hash::make("123456");
         $init->photo = "NULL";
         $init->outlet_id = "1";
+        $init->status = "0";
         $init->save();
         $init->assignRole('Owner');
     }
