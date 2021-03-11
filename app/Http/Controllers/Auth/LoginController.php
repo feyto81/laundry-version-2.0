@@ -64,10 +64,14 @@ class LoginController extends Controller
         $data = array($fieldType => $input['username'], 'password' => $input['password']);
         if (auth()->attempt($data)) {
             $username = auth()->user()->username;
-            if (auth()->user()->hasRole('Administrator')) {
+            if (auth()->user()->status == 1) {
+                if (auth()->user()->hasRole('Administrator')) {
+                    return redirect()->route('dashboard.index')->with(['success' => 'Welcome back ' . $username]);
+                }
                 return redirect()->route('dashboard.index')->with(['success' => 'Welcome back ' . $username]);
+            } else {
+                return redirect()->back()->with(['error' => 'Inactive User']);
             }
-            return redirect()->route('dashboard.index')->with(['success' => 'Welcome back ' . $username]);
         } else {
             return redirect()->back()->with(['error' => 'Invalid email or password']);
         }
