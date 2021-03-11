@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
+use Session;
 
 class LoginController extends Controller
 {
@@ -64,22 +65,31 @@ class LoginController extends Controller
         $data = array($fieldType => $input['username'], 'password' => $input['password']);
         if (auth()->attempt($data)) {
             $username = auth()->user()->username;
-            if (auth()->user()->status == 1) {
+            $status = auth()->user()->status;
+
+            if ($status == 1) {
                 if (auth()->user()->hasRole('Administrator')) {
                     return redirect()->route('dashboard.index')->with(['success' => 'Welcome back ' . $username]);
                 }
                 return redirect()->route('dashboard.index')->with(['success' => 'Welcome back ' . $username]);
             } else {
-                return redirect()->back()->with(['error' => 'Inactive User']);
+                Auth::logout();
+                Session::flush();
+                $this->guard()->logout();
+                return redirect()->back()->with(['error' => 'User Not Active']);
             }
+            // var_dump($status);
         } else {
             return redirect()->back()->with(['error' => 'Invalid email or password']);
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
+        Session::flush();
+        $this->guard()->logout();
+        $request->session()->invalidate();
         return redirect()->route('login')->with(['success' => 'You have successfully logged out']);
     }
 }
