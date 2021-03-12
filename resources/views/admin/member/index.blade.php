@@ -57,6 +57,11 @@
 
 
                             <tbody>
+                                @if ($member->count() == 2)
+                                <tr>
+                                    <td colspan="5">No member to display.</td>
+                                </tr>
+                                @endif
                                 @foreach ($member as $row)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
@@ -92,7 +97,6 @@
 
                     </div>
                 </div>
-                {{$member->links() }}
             </div>
         </div>
         
