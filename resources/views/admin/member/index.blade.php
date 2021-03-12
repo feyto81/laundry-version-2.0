@@ -57,7 +57,7 @@
 
 
                             <tbody>
-                                @if ($member->count() == 2)
+                                @if ($member->count() == 0)
                                 <tr>
                                     <td colspan="5">No member to display.</td>
                                 </tr>
