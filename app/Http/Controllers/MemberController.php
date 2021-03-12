@@ -11,7 +11,7 @@ class MemberController extends Controller
     {
         $data['page_title'] = "Member";
         $data['page_sub_title'] = "Member";
-        $data['member'] = Member::paginate();
+        $data['member'] = Member::paginate(1);
         return view('admin.member.index', $data);
     }
 

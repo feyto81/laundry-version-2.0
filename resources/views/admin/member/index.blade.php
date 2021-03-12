@@ -41,10 +41,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-
-                        
-
-                        <table id="" class="table table-bordered dt-responsive  nowrap w-100">
+                        <table class="table table-bordered dt-responsive  nowrap w-100">
                             <thead>
                             <tr>
                                 <th>No</th>
@@ -54,8 +51,6 @@
                                 <th>Action</th>
                             </tr>
                             </thead>
-
-
                             <tbody>
                                 @if ($member->count() == 0)
                                 <tr>
@@ -94,12 +89,13 @@
                                 @endforeach
                             </tbody>
                         </table>
-
+                        <div align="right">
+                            {{$member->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
     </div>
 </div>
 <div id="modal-detail" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
