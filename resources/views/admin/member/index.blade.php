@@ -44,7 +44,7 @@
 
                         
 
-                        <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                        <table id="" class="table table-bordered dt-responsive  nowrap w-100">
                             <thead>
                             <tr>
                                 <th>No</th>
@@ -92,6 +92,7 @@
 
                     </div>
                 </div>
+                {{$member->links() }}
             </div>
         </div>
         
