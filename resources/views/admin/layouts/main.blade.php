@@ -11,7 +11,19 @@
         @include('admin.partials.css')
         @yield('css')
     </head>
-    <body data-sidebar="dark">
+    <body data-sidebar="colored">
+        <div id="preloader">
+            <div id="status">
+                <div class="spinner-chase">
+                    <div class="chase-dot"></div>
+                    <div class="chase-dot"></div>
+                    <div class="chase-dot"></div>
+                    <div class="chase-dot"></div>
+                    <div class="chase-dot"></div>
+                    <div class="chase-dot"></div>
+                </div>
+            </div>
+        </div>
         <div id="layout-wrapper">
             @include('admin.partials.header')
             <div class="vertical-menu">
