@@ -169,9 +169,24 @@
                             <table class="table table-hover table-bordered">
                                 <tr>
                                     <th>No</th>
-                                    <th>Outlet</th>
+                                    <th>Type</th>
                                     <th>Paket</th>
+                                    <th>Price</th>
+                                    <th>Weight</th>
+                                    <th>Qty</th>
+                                    <th>Sub Total</th>
                                 </tr>
+                                <tbody>
+                                    <tr>
+                                        <td>No</td>
+                                        <td>Type</td>
+                                        <td>Paket</td>
+                                        <td>Price</td>
+                                        <td>Weight</td>
+                                        <td>Qty</td>
+                                        <td>Sub Total</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
