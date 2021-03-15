@@ -23,7 +23,7 @@ class TransactionController extends Controller
         $data['page_sub_title'] = "Add Transaction";
         $data['outlet'] = Outlet::all();
         $data['member'] = Member::all();
-        $data['invoice_code'] = 'INV-' . mt_rand(100000, 999999) . date('s');
+        $data['invoice_code'] = Transaction::transaction_code();
         return view('admin.transaction.add', $data);
     }
 }

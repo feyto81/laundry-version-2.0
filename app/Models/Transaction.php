@@ -27,4 +27,19 @@ class Transaction extends Model
     {
         return $this->belongsTo(Outlet::class, 'outlet_id');
     }
+
+    public static function transaction_code()
+    {
+        $cek = Transaction::all();
+        if ($cek->count() > 0) {
+            $transaksi = Transaction::orderBy('id', 'DESC')->first();
+            $nourut = (int) substr($transaksi->kode, -8, 8);
+            $nourut++;
+            $char = "INV";
+            $number = $char  .  sprintf("%08s", $nourut);
+        } else {
+            $number = "INV"  . "00000001";
+        }
+        return $number;
+    }
 }
