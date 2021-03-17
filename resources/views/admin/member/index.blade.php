@@ -39,11 +39,15 @@
         <br>
         <div class="row">
             <div class="col-12">
+                
                 <div class="card">
+                   
                     <div class="card-body">
+                        <button style="margin-bottom: 10px" class="btn btn-primary delete_all" data-url="{{ url('myproductsDeleteAll') }}">Delete All Selected</button>
                         <table class="table table-bordered dt-responsive  nowrap w-100">
                             <thead>
                             <tr>
+                                <th width="50px"><input type="checkbox" id="master"></th>
                                 <th>No</th>
                                 <th>Name</th>
                                 <th>Address</th>
@@ -59,6 +63,7 @@
                                 @endif
                                 @foreach ($member as $row)
                                 <tr>
+                                    <td><input type="checkbox" class="sub_chk" data-id="{{$row->id}}"></td>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$row->name}}</td>
                                     <td>{{$row->address}}</td>
@@ -190,5 +195,111 @@
             $('#updated').text(updated);
         })
     })
+
+    
+</script>
+<script>
+    $(document).ready(function () {
+
+
+$('#master').on('click', function(e) {
+ if($(this).is(':checked',true))  
+ {
+    $(".sub_chk").prop('checked', true);  
+ } else {  
+    $(".sub_chk").prop('checked',false);  
+ }  
+});
+
+
+$('.delete_all').on('click', function(e) {
+
+
+    var allVals = [];  
+    $(".sub_chk:checked").each(function() {  
+        allVals.push($(this).attr('data-id'));
+    });  
+
+
+    if(allVals.length <=0)  
+    {  
+        alert("Please select row.");  
+    }  else {  
+
+
+        var check = confirm("Are you sure you want to delete this row?");  
+        if(check == true){  
+
+
+            var join_selected_values = allVals.join(","); 
+
+
+            $.ajax({
+                url: $(this).data('url'),
+                type: 'DELETE',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data: 'ids='+join_selected_values,
+                success: function (data) {
+                    if (data['success']) {
+                        $(".sub_chk:checked").each(function() {  
+                            $(this).parents("tr").remove();
+                        });
+                        alert(data['success']);
+                    } else if (data['error']) {
+                        alert(data['error']);
+                    } else {
+                        alert('Whoops Something went wrong!!');
+                    }
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
+
+
+          $.each(allVals, function( index, value ) {
+              $('table tr').filter("[data-row-id='" + value + "']").remove();
+          });
+        }  
+    }  
+});
+
+
+$('[data-toggle=confirmation]').confirmation({
+    rootSelector: '[data-toggle=confirmation]',
+    onConfirm: function (event, element) {
+        element.trigger('confirm');
+    }
+});
+
+
+$(document).on('confirm', function (e) {
+    var ele = e.target;
+    e.preventDefault();
+
+
+    $.ajax({
+        url: ele.href,
+        type: 'DELETE',
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        success: function (data) {
+            if (data['success']) {
+                $("#" + data['tr']).slideUp("slow");
+                alert(data['success']);
+            } else if (data['error']) {
+                alert(data['error']);
+            } else {
+                alert('Whoops Something went wrong!!');
+            }
+        },
+        error: function (data) {
+            alert(data.responseText);
+        }
+    });
+
+
+    return false;
+});
+});
 </script>
 @endpush

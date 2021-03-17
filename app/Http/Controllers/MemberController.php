@@ -76,4 +76,11 @@ class MemberController extends Controller
             return redirect()->back();
         }
     }
+
+    public function deleteAll(Request $request)
+    {
+        $ids = $request->ids;
+        DB::table("member")->whereIn('id', explode(",", $ids))->delete();
+        return response()->json(['success' => "Member Deleted successfully."]);
+    }
 }

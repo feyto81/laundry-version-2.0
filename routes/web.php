@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('member', MemberController::class);
         Route::get('member/delete/{id}', [MemberController::class, 'destroy']);
+        Route::delete('member/deleteAll', [MemberController::class, 'deleteAll']);
         Route::get('member/edit/{id}', [MemberController::class, 'edit']);
         Route::post('member/update/{id}', [MemberController::class, 'update']);
 
@@ -53,6 +54,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('paket/update/{id}', [PaketController::class, 'update']);
 
         Route::resource('transaction', TransactionController::class);
+
+
 
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     });

@@ -56,6 +56,16 @@
                         <table widht="100%">
                             <tr>
                                 <tr>
+                                    <td style="">
+                                        <label for="invoice_code">Invoice</label>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" id="invoice_code" readonly name="invoice_code" value="{{$invoice_code}}" class="form-control">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td style="vertical-align: top">
                                         <label for="date">Date</label>
                                     </td>
@@ -67,29 +77,30 @@
                                 </tr>
                                 <tr>
                                     <td style="vertical-align: top; width: 30%">
-                                        <label for="user">Officer</label>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="text" id="user_id" name="user_id" value="{{Auth::user()->name}}" class="form-control" readonly>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="vertical-align: top">
-                                        <label for="member_id">Member</label>
+                                        <label for="outlet_id">Outlet</label>
                                     </td>
                                     <td>
                                         <div class="form-group input-group">
-                                            <select class="form-select select2" id="level_id" name="member_id">
-                                                <option value="non_member">Non Member</option>
-                                                @foreach ($member as $item)
-                                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                            <select class="form-select select2" id="outlet_id" name="outlet_id">
+                                                
+                                                @foreach ($outlet as $outlets)
+                                                <option value="{{$outlets->id}}">{{$outlets->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td style="vertical-align: top">
+                                        <label for="pay_date">Pay Date</label>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="date" id="pay_date" name="pay_date" value="" class="form-control">
+                                        </div>
+                                    </td>
+                                </tr>
+                                
                                 
 
                             </tr>
@@ -150,18 +161,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card card-primary">
-                    <div class="card-body">
-                        <div align="right">
-                            <h4>Invoice <b><span id="sale_id" name="sale_id">{{$invoice_code}}</span></b></h4>
-                            <h1><b><span id="grand_total2" style="font-size: 50pt">0</span></b></h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
         <div class="row">
+            
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
@@ -193,6 +196,7 @@
                 </div>
             </div>
         </div>
+        
         
     </div>
 </div>
