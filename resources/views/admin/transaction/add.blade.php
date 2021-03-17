@@ -101,7 +101,7 @@
                                     </td>
                                 </tr>
                                 
-                                
+                               
 
                             </tr>
                             
@@ -114,43 +114,28 @@
                     <div class="card-body">
                         <table widht="100%">
                             <tr>
-                                
                                 <tr>
                                     <td style="vertical-align: top">
-                                        <label for="barcode">Outlet</label>
+                                        <label for="deadline">Deadline</label>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="date" id="deadline" name="deadline" value="" class="form-control">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: top; width: 30%">
+                                        <label for="paket_id">Paket</label>
                                     </td>
                                     <td>
                                         <div class="form-group input-group">
-                                            <input type="hidden" id="outlet_id" name="outlet_id">
-                                           
-                                            <input type="text" id="name" name="name" class="form-control" autofocus >
-                                            <span class="input-group-btn">
-                                                <button type="button" class="btn btn-info btn-flat" data-bs-toggle="modal" data-bs-target="#modal-outlet">
-                                                    <i class="fa fa-search"></i>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="vertical-align: top; width: 30%">
-                                        <label for="address">Address</label>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="text" id="address" name="address" class="form-control">
-                                            
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="vertical-align: top; width: 30%">
-                                        <label for="phone_number">Phone</label>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="text" id="phone_number" name="phone_number" class="form-control">
-                                            
+                                            <select class="form-select select2" id="member_id" name="member_id">
+                                                @foreach($paket as $pakets)
+                                                    <option value="{{$pakets->id}}"> {{$pakets->type}} </option>
+                                                @endforeach
+                                                
+                                            </select>
                                         </div>
                                     </td>
                                 </tr>
