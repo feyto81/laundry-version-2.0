@@ -50,103 +50,169 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <table widht="100%">
-                            <tr>
-                                <tr>
-                                    <td style="">
-                                        <label for="invoice_code">Invoice</label>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="text" id="invoice_code" readonly name="invoice_code" value="{{$invoice_code}}" class="form-control">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="vertical-align: top">
-                                        <label for="date">Date</label>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="text" id="date" name="date" readonly value="<?=date('Y-m-d H:i:s')?>" class="form-control">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="vertical-align: top; width: 30%">
-                                        <label for="outlet_id">Outlet</label>
-                                    </td>
-                                    <td>
-                                        <div class="form-group input-group">
-                                            <select class="form-select select2" id="outlet_id" name="outlet_id">
-                                                
-                                                @foreach ($outlet as $outlets)
-                                                <option value="{{$outlets->id}}">{{$outlets->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="vertical-align: top">
-                                        <label for="pay_date">Pay Date</label>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="date" id="pay_date" name="pay_date" value="" class="form-control">
-                                        </div>
-                                    </td>
-                                </tr>
-                                
-                               
-
-                            </tr>
-                            
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <table widht="100%">
-                            <tr>
-                                <tr>
-                                    <td style="vertical-align: top">
-                                        <label for="deadline">Deadline</label>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="date" id="deadline" name="deadline" value="" class="form-control">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="vertical-align: top; width: 30%">
-                                        <label for="paket_id">Paket</label>
-                                    </td>
-                                    <td>
-                                        <div class="form-group input-group">
-                                            <select class="form-select select2" id="member_id" name="member_id">
-                                                @foreach($paket as $pakets)
-                                                    <option value="{{$pakets->id}}"> {{$pakets->type}} </option>
-                                                @endforeach
-                                                
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                            </tr>
-                            
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <form id="formSave" method="POST">
+                @csrf
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table widht="100%">
+                                        <tr>
+                                            <tr>
+                                                <td style="">
+                                                    <label for="invoice_code">Invoice</label>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" id="invoice_code" readonly name="invoice_code" value="{{$invoice_code}}" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: top">
+                                                    <label for="date">Date</label>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" id="date" name="date" readonly value="<?=date('Y-m-d H:i:s')?>" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: top; width: 30%">
+                                                    <label for="outlet_id">Outlet</label>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group input-group">
+                                                        <select class="form-select select2" id="outlet_id" name="outlet_id">
+                                                            
+                                                            @foreach ($outlet as $outlets)
+                                                            <option value="{{$outlets->id}}">{{$outlets->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: top">
+                                                    <label for="pay_date">Pay Date</label>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="date" id="pay_date" name="pay_date" value="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            
+                                           
             
+                                        </tr>
+                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table widht="100%">
+                                        <tr>
+                                            <tr>
+                                                <td style="vertical-align: top">
+                                                    <label for="deadline">Deadline</label>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="date" id="deadline" name="deadline" value="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: top; width: 30%">
+                                                    <label for="paket_id">Paket</label>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group input-group">
+                                                        <input type="text" id="name" name="name" class="form-control" autofocus >
+                                                        <input type="hidden" id="paket_id" name="paket_id">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-info btn-flat" data-bs-toggle="modal" data-bs-target="#modal-paket">
+                                                                <i class="fa fa-search"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: top">
+                                                    <label for="type">Type</label>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" id="type" name="type" value="" readonly class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: top">
+                                                    <label for="price">Price</label>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="number" id="price" name="price" readonly value="<?=date('Y-m-d H:i:s')?>" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            
+            
+                                        </tr>
+                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table widht="100%">
+                                        <tr>
+                                            <tr>
+                                                <td style="vertical-align: top">
+                                                    <label for="weight">Weight</label>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="number" id="weight" name="weight" value="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="vertical-align: top">
+                                                    <label for="sub_total">Sub Total</label>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="number" id="sub_total" readonly name="sub_total" value="" class="form-control">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tr>
+                                        
+                                    </table>
+                                    
+                                </div>
+                                
+                            </div>
+                            <button type="submit" name="submit" class="btn btn-primary">
+                                <i class="fa fa-cart-plus"></i> Add
+                              </button>
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
         </div>
         <div class="row">
             
@@ -225,6 +291,49 @@
         </div>
     </div>
 </div>
+<div id="modal-paket" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myModalLabel">Paket</h5>
+                <button type="button" id="closeModalPaket" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body table-responsive">
+                <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                  <thead>
+                    <tr>
+                      <th>Outlet</th>
+                      <th>Type</th>
+                      <th>Paket Name</th>
+                      <th>Price</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($paket as $pakets)
+                      <tr>
+                        <td>{{$pakets->Outlet->name}}</td>
+                        <td>{{$pakets->type}}</td>
+                        <td>{{$pakets->paket_name}}</td>
+                        <td>{{$pakets->price}}</td>
+                        <td class="text-right">
+                          <button class="btn btn-info btn-xs" id="select3"
+                           data-id="{{$pakets->id}}"
+                           data-outlet = "{{$pakets->Outlet->name}}"
+                           data-type="{{$pakets->type}}"
+                           data-name="{{$pakets->paket_name}}"
+                           data-price="{{$pakets->price}}">
+                            <i class="fa fa-check"></i> Select
+                          </button>
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('script')
 <script src="{{asset('assets/libs/select2/js/select2.min.js')}}"></script>
@@ -248,6 +357,24 @@ $(document).on('click', '#select', function() {
 	$('#address').val($(this).data('address'))
 	$('#phone_number').val($(this).data('phone_number'))
   $('#closeModalOutlet').click();
+});
+
+$(document).on('click', '#select3', function() {
+    $('#paket_id').val($(this).data('id'))
+	$('#outlet_id').val($(this).data('outlet'))
+	$('#type').val($(this).data('type'))
+	$('#name').val($(this).data('name'))
+	$('#price').val($(this).data('price'))
+  $('#closeModalPaket').click();
+});
+
+$('document').ready(function(){
+    $('#weight').on('keyup', function() {
+        var price = $('#price').val();
+        var weight = $('#weight').val();
+        var sub_total = parseInt(price) * parseInt(weight);
+        $('#sub_total').val(sub_total);
+    })
 });
 </script>
 @endpush
