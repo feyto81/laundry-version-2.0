@@ -54,6 +54,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('paket/update/{id}', [PaketController::class, 'update']);
 
         Route::resource('transaction', TransactionController::class);
+        Route::get('transaction/getcart/response', [TransactionController::class, 'getCart'])->name('getCart');
+        Route::post('transaction/savecart/response', [TransactionController::class, 'saveCart'])->name('savecart');
+        Route::get('transaction/delete-cart/response/{cart_id}', [TransactionController::class, 'delete_cart']);
 
 
 

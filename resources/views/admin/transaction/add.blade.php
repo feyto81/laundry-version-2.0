@@ -227,8 +227,8 @@
                                     <th>Paket</th>
                                     <th>Price</th>
                                     <th>Weight</th>
-                                    <th>Qty</th>
                                     <th>Sub Total</th>
+                                    <th>Action</th>
                                 </tr>
                                 <tbody id="cart_table">
                                     
@@ -236,6 +236,42 @@
                             </table>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <table widht="100%">
+                            <tr>
+                                <tr>
+                                    <td style="vertical-align: top">
+                                        <label for="discount">Discount</label>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="number" id="discount" name="discount" value="" class="form-control">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align: top">
+                                        <label for="tax">Tax</label>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="number" id="tax" name="tax" value="" class="form-control">
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                            </tr>
+                            
+                        </table>
+                        
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -368,15 +404,24 @@ $('document').ready(function(){
         $('#sub_total').val(sub_total);
     })
 });
+function loadDataTable(){
+      $.ajax({
+        url: "{{route('getCart')}}",
+        success:function(data){
+          $('#cart_table').html(data);
+        }
+      })
+    }
+loadDataTable();
 $('#formSave').submit(function(e){
     e.preventDefault();
     var request = new FormData(this);
-    var outlet = $('#outlet_id').val()
+    var outlet_id = $('#outlet_id').val()
     var pay_date = $('#pay_date').val()
     var deadline = $('#deadline').val()
     var paket = $('#paket_id').val()
     var weight = $('#weight').val()
-    if (outlet == '') {
+    if (outlet_id == '') {
         Swal.fire({
             title:"Error",
             text:"Outlet is empty!",
@@ -412,9 +457,51 @@ $('#formSave').submit(function(e){
             confirmButtonColor:"#556ee6"
         })
     } else {
-        
+        $.ajax({
+            url: "{{route('savecart')}}",
+            method: "POST",
+            data: request,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success:function (data) {
+                if(data == "sukses"){
+                    // Swal.fire({
+                    //     title:"Success",
+                    //     text:"Successfully saved!",
+                    //     icon: "success",
+                    //     confirmButtonColor:"#556ee6"
+                    // })
+                    loadDataTable();
+                }
+                else {
+                    alert('gagal menambah data');
+                }
+            }
+        });
     }
 
+});
+$(document).on('click','.btn-delete',function(e){
+    e.preventDefault();
+    var cart_id = $(this).attr('cart-id');
+    $.ajax({
+        url: "{{url('admin/transaction/delete-cart/response')}}/"+cart_id,
+        method: "GET",
+        success:function(data){
+            if (data == "sukses") {
+                // Swal.fire({
+                //         title:"Success",
+                //         text:"Successfully Deleted!",
+                //         icon: "success",
+                //         confirmButtonColor:"#556ee6"
+                // })
+                loadDataTable();
+            } else {
+                alert('gagal');
+            }
+        }
+    });
 });
 </script>
 @endpush
