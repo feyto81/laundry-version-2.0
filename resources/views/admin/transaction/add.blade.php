@@ -85,12 +85,13 @@
                                                 </td>
                                                 <td>
                                                     <div class="form-group input-group">
-                                                        <select class="form-select select2" id="outlet_id" name="outlet_id">
-                                                            
-                                                            @foreach ($outlet as $outlets)
-                                                            <option value="{{$outlets->id}}">{{$outlets->name}}</option>
-                                                            @endforeach
-                                                        </select>
+                                                        <input type="text" id="name" name="name" class="form-control" autofocus >
+                                                        <input type="hidden" id="outlet_id" name="outlet_id">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-info btn-flat" data-bs-toggle="modal" data-bs-target="#modal-outlet">
+                                                                <i class="fa fa-search"></i>
+                                                            </button>
+                                                        </span>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -134,7 +135,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="form-group input-group">
-                                                        <input type="text" id="name" name="name" class="form-control" autofocus >
+                                                        <input type="text" id="paket_name" name="name" class="form-control" autofocus >
                                                         <input type="hidden" id="paket_id" name="paket_id">
                                                         <span class="input-group-btn">
                                                             <button type="button" class="btn btn-info btn-flat" data-bs-toggle="modal" data-bs-target="#modal-paket">
@@ -245,6 +246,16 @@
                     <div class="card-body">
                         <table widht="100%">
                             <tr>
+                                <tr>
+                                    <td style="vertical-align: top">
+                                        <label for="total">Total</label>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="number" id="total" readonly name="total" value="" class="form-control">
+                                        </div>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td style="vertical-align: top">
                                         <label for="discount">Discount</label>
@@ -391,7 +402,7 @@ $(document).on('click', '#select3', function() {
     $('#paket_id').val($(this).data('id'))
 	$('#outlet_id').val($(this).data('outlet'))
 	$('#type').val($(this).data('type'))
-	$('#name').val($(this).data('name'))
+	$('#paket_name').val($(this).data('name'))
 	$('#price').val($(this).data('price'))
   $('#closeModalPaket').click();
 });
@@ -409,6 +420,7 @@ function loadDataTable(){
         url: "{{route('getCart')}}",
         success:function(data){
           $('#cart_table').html(data);
+          calculate();
         }
       })
     }
@@ -421,6 +433,7 @@ $('#formSave').submit(function(e){
     var deadline = $('#deadline').val()
     var paket = $('#paket_id').val()
     var weight = $('#weight').val()
+    console.log(outlet_id);
     if (outlet_id == '') {
         Swal.fire({
             title:"Error",
@@ -503,5 +516,16 @@ $(document).on('click','.btn-delete',function(e){
         }
     });
 });
+function calculate() {
+    var subtotal = 0;
+    $('#cart_table tr').each(function() {
+		subtotal += parseInt($(this).find('#sub_total_cart').text())
+	})
+    // isNaN(subtotal) ? $('#total').val(0) : $('#total').val(subtotal)
+    var sub_total_cart = $('#sub_total_cart').val()
+}
+$(document).ready(function() {
+	calculate()
+})
 </script>
 @endpush

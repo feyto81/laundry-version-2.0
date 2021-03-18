@@ -15,7 +15,7 @@ class CreateCartTable extends Migration
     {
         Schema::create('cart', function (Blueprint $table) {
             $table->id();
-            $table->string('transaction_code');
+            $table->string('invoice_code');
             $table->dateTime('date');
             $table->foreign('outlet_id')->references('id')->on('outlet');
             $table->unsignedBigInteger('outlet_id');
