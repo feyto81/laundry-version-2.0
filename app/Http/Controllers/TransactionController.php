@@ -37,7 +37,7 @@ class TransactionController extends Controller
         $data = new Cart;
         $data->invoice_code = $request->invoice_code;
         $data->date = $request->date;
-        $data->outlet_id = '1';
+        $data->outlet_id = $request->outlet_id;
         $data->pay_date = $request->pay_date;
         $data->deadline = $request->deadline;
         $data->paket_id = $request->paket_id;

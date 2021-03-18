@@ -261,7 +261,7 @@
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" id="tax" name="tax" value="" class="form-control">
+                                            <input type="number" id="tax" name="tax" value="10" readonly class="form-control">
                                         </div>
                                     </td>
                                 </tr>
