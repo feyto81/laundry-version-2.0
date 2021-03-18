@@ -161,7 +161,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="form-group">
-                                                        <input type="number" id="price" name="price" readonly value="<?=date('Y-m-d H:i:s')?>" class="form-control">
+                                                        <input type="number" id="price" name="price" readonly value="" class="form-control">
                                                     </div>
                                                 </td>
                                             </tr>
@@ -517,12 +517,13 @@ $(document).on('click','.btn-delete',function(e){
     });
 });
 function calculate() {
-    var subtotal = 0;
-    $('#cart_table tr').each(function() {
+	var subtotal = 0;
+	$('#cart_table tr').each(function() {
 		subtotal += parseInt($(this).find('#sub_total_cart').text())
 	})
-    // isNaN(subtotal) ? $('#total').val(0) : $('#total').val(subtotal)
-    var sub_total_cart = $('#sub_total_cart').val()
+	isNaN(subtotal) ? $('#total').val(0) : $('#total').val(subtotal)
+
+	
 }
 $(document).ready(function() {
 	calculate()
