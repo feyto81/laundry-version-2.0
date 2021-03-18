@@ -230,16 +230,8 @@
                                     <th>Qty</th>
                                     <th>Sub Total</th>
                                 </tr>
-                                <tbody>
-                                    <tr>
-                                        <td>No</td>
-                                        <td>Type</td>
-                                        <td>Paket</td>
-                                        <td>Price</td>
-                                        <td>Weight</td>
-                                        <td>Qty</td>
-                                        <td>Sub Total</td>
-                                    </tr>
+                                <tbody id="cart_table">
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -375,6 +367,52 @@ $('document').ready(function(){
         var sub_total = parseInt(price) * parseInt(weight);
         $('#sub_total').val(sub_total);
     })
+});
+$('#formSave').submit(function(e){
+    e.preventDefault();
+    var request = new FormData(this);
+    var outlet = $('#outlet_id').val()
+    var pay_date = $('#pay_date').val()
+    var deadline = $('#deadline').val()
+    var paket = $('#paket_id').val()
+    var weight = $('#weight').val()
+    if (outlet == '') {
+        Swal.fire({
+            title:"Error",
+            text:"Outlet is empty!",
+            icon: "warning",
+            confirmButtonColor:"#556ee6"
+        })
+    } else if (pay_date == '') {
+        Swal.fire({
+            title:"Error",
+            text:"Pay Date is empty!",
+            icon: "warning",
+            confirmButtonColor:"#556ee6"
+        })
+    } else if (deadline == '') {
+        Swal.fire({
+            title:"Error",
+            text:"Deadline is empty!",
+            icon: "warning",
+            confirmButtonColor:"#556ee6"
+        })
+    } else if (paket == '') {
+        Swal.fire({
+            title:"Error",
+            text:"Paket is empty!",
+            icon: "warning",
+            confirmButtonColor:"#556ee6"
+        })
+    } else {
+        Swal.fire({
+            title:"Error",
+            text:"Weight is empty!",
+            icon: "warning",
+            confirmButtonColor:"#556ee6"
+        })
+    }
+
 });
 </script>
 @endpush
