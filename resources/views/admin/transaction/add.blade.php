@@ -404,13 +404,15 @@ $('#formSave').submit(function(e){
             icon: "warning",
             confirmButtonColor:"#556ee6"
         })
-    } else {
+    } else if(weight == '') {
         Swal.fire({
             title:"Error",
             text:"Weight is empty!",
             icon: "warning",
             confirmButtonColor:"#556ee6"
         })
+    } else {
+        
     }
 
 });
