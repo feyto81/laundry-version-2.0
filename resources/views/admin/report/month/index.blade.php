@@ -35,44 +35,42 @@
         @endif
         <br>
         <div class="row">
-            <form action="{{url('admin/report/day/search')}}" method="GET" enctype="multipart/form-data">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <form class="navbar-form navbar-right" role="search" action="{{url('admin/report/month')}}">
-                                        <div class="input-group">
-                                    <select class="form-control" name="bulan" data-placeholder="Choose a Category" tabindex="1">
-                                        <option disabled selected>--Select by month-- </option>
-                                        <option value="01">Januari</option>
-                                        <option value="02">Februari</option>
-                                        <option value="03">Maret</option>
-                                        <option value="04">April</option>
-                                        <option value="05">Mei</option>
-                                        <option value="06">Juni</option>
-                                        <option value="07">Juli</option>
-                                        <option value="08">Agustus</option>
-                                        <option value="09">September</option>
-                                        <option value="10">Oktober</option>
-                                        <option value="11">November</option>
-                                        <option value="12">Desember</option>
-                                    </select>
-                                        <button class="btn btn-success " type="submit"><i class="fa fa-search"></i>
-                    
-                    
-                                    </button>
-                                    </div>
-                                        
-                                    </form>
-                                    
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="navbar-form navbar-right" role="search" action="{{url('admin/report/month/search')}}">
+                                    <div class="input-group">
+                                <select class="form-control" name="bulan" data-placeholder="Choose a Category" tabindex="1">
+                                    <option disabled selected>--Select by month-- </option>
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Maret</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                                    <button class="btn btn-success " type="submit"><i class="fa fa-search"></i>
+                
+                
+                                </button>
                                 </div>
+                                    
+                                </form>
+                                
                             </div>
                         </div>
-                       
                     </div>
+                    
                 </div>
-            </form>
+            </div>
         </div>
         <div class="row">
             <div class="col-12">
