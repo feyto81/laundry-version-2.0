@@ -86,7 +86,7 @@
                                                 <td>
                                                     <div class="form-group input-group">
                                                         <input type="text" id="name" name="name" class="form-control" autofocus >
-                                                        <input type="hidden" id="outlet_id" name="outlet_id">
+                                                        <input type="hidden" id="outles" name="outlet_id">
                                                         <span class="input-group-btn">
                                                             <button type="button" class="btn btn-info btn-flat" data-bs-toggle="modal" data-bs-target="#modal-outlet">
                                                                 <i class="fa fa-search"></i>
@@ -101,7 +101,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="form-group">
-                                                        <input type="date" id="pay_date" name="pay_date" value="" class="form-control">
+                                                        <input type="date" id="pay_date" name="pay_date" value="{{date('Y-m-d')}}" class="form-control">
                                                     </div>
                                                 </td>
                                             </tr>
@@ -216,76 +216,160 @@
             </form>
         </div>
         <div class="row">
-            
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover table-bordered">
-                                <tr>
-                                    <th>No</th>
-                                    <th>Type</th>
-                                    <th>Paket</th>
-                                    <th>Price</th>
-                                    <th>Weight</th>
-                                    <th>Sub Total</th>
-                                    <th>Action</th>
-                                </tr>
-                                <tbody id="cart_table">
-                                    
-                                </tbody>
-                            </table>
+            <form action="{{route('kirimsemua')}}" method="POST">
+                
+                @csrf
+                <input type="hidden" id="date" name="date" readonly value="<?=date('Y-m-d')?>" class="form-control">
+                <div class="row">
+                    
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Type</th>
+                                            <th>Paket</th>
+                                            <th>Price</th>
+                                            <th>Weight</th>
+                                            <th>Sub Total</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        <tbody id="cart_table">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <table widht="100%">
-                            <tr>
-                                <tr>
-                                    <td style="vertical-align: top">
-                                        <label for="total">Total</label>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="number" id="total" readonly name="total" value="" class="form-control">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="vertical-align: top">
-                                        <label for="discount">Discount</label>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="number" id="discount" name="discount" value="" class="form-control">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="vertical-align: top">
-                                        <label for="tax">Tax</label>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="number" id="tax" name="tax" value="10" readonly class="form-control">
-                                        </div>
-                                    </td>
-                                </tr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <table widht="100%">
+                                    <tr>
+                                        <tr>
+                                            <td style="vertical-align: top">
+                                                <label for="total">Total</label>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="number" id="total" readonly name="total" value="" class="form-control">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr id="member_id">
+                                            <td style="vertical-align: top">
+                                                <label for="member_id">Member</label>
+                                            </td>
+                                            <td>
+                                                <div class="col-md-10">
+                                                    <select class="form-select" id="member_id" name="member_id">
+                                                        <option value="non_member">Non Member</option>
+                                                        @foreach ($member as $members)
+                                                        <option value="{{$members->id}}">{{$members->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="vertical-align: top">
+                                                <label for="tax">Tax</label>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="number" id="tax" readonly name="tax" value="10" class="form-control">
+                                                    <input type="hidden" id="result_tax" name="" value="" class="form-control">
+                                                    <input type="hidden" id="result_discount" name="" value="" class="form-control">
+                                                    
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        
+                                        
+                                    </tr>
+                                    
+                                </table>
                                 
-                            </tr>
+                            </div>
                             
-                        </table>
-                        
+                        </div>
                     </div>
-                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <table widht="100%">
+                                    <tr>
+                                        
+                                        <tr>
+                                            <td style="vertical-align: top">
+                                                <label for="discount">Discount</label>
+                                            </td>
+                                            <td>
+                                                <div class="col-md-10">
+                                                    <input type="number" id="discount" name="discount" value="0" class="form-control">
+                                                    
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="vertical-align: top">
+                                                <label for="additional_cost">Additional Cost</label>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="number" id="additional_cost" name="additional_cost" value="" class="form-control">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="vertical-align: top">
+                                                <label for="additional_cost">Pay Total</label>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="number" id="pay_total" readonly name="pay_total" value="" class="form-control">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        
+                                        
+                                    </tr>
+                                    
+                                </table>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <table widht="100%">
+                                    <tr>
+                                        
+                                        <button type="submit" id="process_payment" class="btn btn-flat btn-lg btn-success">
+                                            <i class="fa fa-paper-plane-o"></i> Process Payment
+                                        </button>
+                                        
+                                    </tr>
+                                    
+                                </table>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
+
         
         
     </div>
@@ -391,7 +475,7 @@
 <script src="{{asset('assets/libs/sweetalert2/sweetalert2.min.js')}}"></script> 
 <script>
 $(document).on('click', '#select', function() {
-	$('#outlet_id').val($(this).data('id'))
+	$('#outles').val($(this).data('id'))
 	$('#name').val($(this).data('name'))
 	$('#address').val($(this).data('address'))
 	$('#phone_number').val($(this).data('phone_number'))
@@ -522,11 +606,54 @@ function calculate() {
 		subtotal += parseInt($(this).find('#sub_total_cart').text())
 	})
 	isNaN(subtotal) ? $('#total').val(0) : $('#total').val(subtotal)
+    
+    var total = $('#total').val()
+    var tax = $('#tax').val()
+    var pajak = parseInt(total) * parseInt(tax) / 100;
+    var pjk = parseInt(total) + parseInt(pajak)
+    $('#pay_total').val(pjk)
+    $('#result_tax').val(pjk)
 
-	
+   
+    // var discount = $('#discount').val();
+    // var pay_total = parseInt(discount) / 100 * parseInt(total);
+    // $('#pay_total').val(pay_total);
+    var pajak = parseInt(sub_) * parseInt(discount) / 100;
+    
 }
 $(document).ready(function() {
 	calculate()
 })
+$('.member').on('change', function() {
+        var tb_member = $(this).val();
+        if (tb_member == 'bukan_member') {
+            $("#member_id").hide();
+            $("#diskon").hide();
+        } else if (tb_member == 'member') {
+            $("#member_id").show();
+            $("#diskon").show();
+        }
+    });
+    $('document').ready(function(){
+        $('#discount').on('keyup', function() {
+            var result_tax = $('#result_tax').val();
+            var discount = $('#discount').val();
+           
+            var pay_total = parseInt(result_tax) * parseInt(discount) / 100;
+            $('#pay_total').val(pay_total);
+            $('#result_discount').val(pay_total);
+           
+        })
+    });
+    $('document').ready(function(){
+        $('#additional_cost').on('keyup', function() {
+            var additional_cost = $('#additional_cost').val();
+            var result_discount = $('#result_discount').val();
+            var jumlah =  parseInt(additional_cost) + parseInt(result_discount);
+
+            $('#pay_total').val(jumlah);
+           
+        })
+    });
 </script>
 @endpush

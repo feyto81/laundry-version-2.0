@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\PaketController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
 
 /*
@@ -57,9 +58,23 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('transaction/getcart/response', [TransactionController::class, 'getCart'])->name('getCart');
         Route::post('transaction/savecart/response', [TransactionController::class, 'saveCart'])->name('savecart');
         Route::get('transaction/delete-cart/response/{cart_id}', [TransactionController::class, 'delete_cart']);
-
-
+        Route::post('transaction/sale', [TransactionController::class, 'kirimsemua'])->name('kirimsemua');
+        Route::get('transaction/print/invoice/{id}', [TransactionController::class, 'print']);
+        Route::get('transaction/edit/{id}', [TransactionController::class, 'edit']);
+        Route::post('transaction/update/{id}', [TransactionController::class, 'update']);
+        Route::get('transaction/category/baru', [TransactionController::class, 'baru']);
+        Route::get('transaction/category/proses', [TransactionController::class, 'proses']);
+        Route::get('transaction/category/selesai', [TransactionController::class, 'selesai']);
+        Route::get('transaction/category/diambil', [TransactionController::class, 'diambil']);
 
         Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+        Route::get('report/day', [ReportController::class, 'day']);
+        Route::get('report/day/search', [ReportController::class, 'day_search']);
+        Route::get('report/day/cetakpdf', [ReportController::class, 'day_pdf']);
+
+        Route::get('report/month', [ReportController::class, 'month']);
+        Route::get('report/month/search', [ReportController::class, 'month_search']);
+        Route::get('report/month/cetakpdf', [ReportController::class, 'month_pdf']);
     });
 });

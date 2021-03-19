@@ -9,6 +9,7 @@ use App\Models\Member;
 use App\Models\Paket;
 use App\Models\Cart;
 use Auth;
+use DB;
 
 class TransactionController extends Controller
 {
@@ -16,9 +17,14 @@ class TransactionController extends Controller
     {
         $data['page_title'] = "Order List";
         $data['page_sub_title'] = "Order List";
-        $data['transaction'] = Transaction::all();
+        $transaction = DB::table('transaction')
+            ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
+            ->join('member', 'transaction.member_id', '=', 'member.id')
+            ->join('users', 'transaction.user_id', '=', 'users.id')
+            ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
+            ->get();
 
-        return view('admin.transaction.index', $data);
+        return view('admin.transaction.index', $data, compact('transaction'));
     }
     public function create()
     {
@@ -59,5 +65,147 @@ class TransactionController extends Controller
         $cart = Cart::find($cart_id);
         $cart->delete();
         echo "sukses";
+    }
+
+    public function kirimsemua(Request $request)
+    {
+
+        $user_id = Auth::user()->id;
+        $transaction_code = Transaction::transaction_code();
+
+        // DB::table('transaction')->insert([
+        //     'invoice_code' => $transaction_code,
+        //     'date' => $request->date,
+        //     'member_id' => $request->member_id,
+        //     'additional_cost' => $request->additional_cost,
+        //     'discon' => $request->discount,
+        //     'tax' => $request->tax,
+        //     'status' => 'baru',
+        //     'user_id' => $user_id,
+        // ]);
+        $transaction = new Transaction();
+        $transaction->invoice_code = $transaction_code;
+        $transaction->date = $request->date;
+        $transaction->member_id = $request->member_id;
+        $transaction->additional_cost = $request->additional_cost;
+        $transaction->discon = $request->discount;
+        $transaction->sub_total = $request->total;
+        $transaction->paid = 'belum_dibayar';
+        $transaction->pay_total = $request->pay_total;
+        $transaction->tax = $request->tax;
+        $transaction->status = 'baru';
+        $transaction->user_id = $user_id;
+        $transaction->save();
+
+        $select = DB::table('cart')->where('user_id', $user_id)->get();
+        foreach ($select as $s) {
+            DB::table('transaction_detail')->insert([
+                'invoice_code' => $s->invoice_code,
+                'paket_id' => $s->paket_id,
+                'outlet_id' => $s->outlet_id,
+                'pay_date' => $s->pay_date,
+                'deadline' => $s->deadline,
+                'weight' => $s->weight,
+            ]);
+        }
+
+        foreach ($select as $s) {
+            DB::table('cart')->truncate([
+                'invoice_code' => $s->invoice_code,
+                'paket_id' => $s->paket_id,
+                'outlet_id' => $s->outlet_id,
+                'pay_date' => $s->pay_date,
+                'deadline' => $s->deadline,
+                'weight' => $s->weight,
+            ]);
+        }
+        return redirect()->route('transaction.index')->with(['success' => 'Data has been saved']);
+    }
+
+    public function print($id)
+    {
+        $data = Transaction::find($id);
+        $invoice_code = $data->invoice_code;
+        $transaction = DB::table('transaction')
+            ->join('users', 'transaction.user_id', '=', 'users.id')
+            ->join('member', 'transaction.member_id', '=', 'member.id')
+            ->select('transaction.*', 'users.name as user_name', 'member.name as member_name')
+            ->where('invoice_code', '=', $invoice_code)
+            ->get();
+        $transaction_detail = DB::table('transaction_detail')
+            ->join('paket', 'transaction_detail.paket_id', '=', 'paket.id')
+            ->join('outlet', 'transaction_detail.outlet_id', '=', 'outlet.id')
+            ->select('transaction_detail.*', 'paket.paket_name as paket_name', 'outlet.name as outlet_name', 'paket.price as paket_price')
+            ->where('invoice_code', '=', $invoice_code)
+            ->get();
+
+
+        return view('admin.transaction.print', compact('transaction', 'transaction_detail'));
+    }
+
+    public function edit($id)
+    {
+        $transaction = Transaction::find($id);
+        return view('admin.transaction.edit', compact('transaction'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $transaction = Transaction::find($id);
+        $transaction->status = $request->status;
+        $transaction->paid = $request->paid;
+        $transaction->save();
+        return redirect()->route('transaction.index')->with(['success' => 'Data has been updated']);
+    }
+
+    public function baru(Request $request)
+    {
+        $url = $request->fullUrl();
+        $transaction = DB::table('transaction')
+            ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
+            ->join('member', 'transaction.member_id', '=', 'member.id')
+            ->join('users', 'transaction.user_id', '=', 'users.id')
+            ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
+            ->where('transaction.status', 'baru')
+            ->get();
+
+        return view('admin.transaction.baru', compact('transaction', 'url'));
+    }
+
+    public function proses()
+    {
+        $transaction = DB::table('transaction')
+            ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
+            ->join('member', 'transaction.member_id', '=', 'member.id')
+            ->join('users', 'transaction.user_id', '=', 'users.id')
+            ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
+            ->where('transaction.status', 'proses')
+            ->get();
+
+        return view('admin.transaction.baru', compact('transaction'));
+    }
+
+    public function selesai()
+    {
+        $transaction = DB::table('transaction')
+            ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
+            ->join('member', 'transaction.member_id', '=', 'member.id')
+            ->join('users', 'transaction.user_id', '=', 'users.id')
+            ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
+            ->where('transaction.status', 'selesai')
+            ->get();
+        return view('admin.transaction.baru', compact('transaction'));
+    }
+
+    public function diambil()
+    {
+        $transaction = DB::table('transaction')
+            ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
+            ->join('member', 'transaction.member_id', '=', 'member.id')
+            ->join('users', 'transaction.user_id', '=', 'users.id')
+            ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
+            ->where('transaction.status', 'diambil')
+            ->get();
+        return view('admin.transaction.baru', compact('transaction'));
     }
 }

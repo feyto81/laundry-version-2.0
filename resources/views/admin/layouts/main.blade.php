@@ -80,6 +80,17 @@
                                     <li><a href="{{route('transaction.index')}}" key="t-buy">Order List</a></li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-tone"></i>
+                                    <span key="t-crypto">Report</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{url('admin/report/day')}}" key="t-wallet">Day</a></li>
+                                    <li><a href="{{url('admin/report/month')}}" key="t-buy">Month</a></li>
+                                    <li><a href="{{url('admin/report/year')}}" key="t-buy">Year</a></li>
+                                </ul>
+                            </li>
                             <li class="menu-title" key="t-menu">Administrator</li>
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">

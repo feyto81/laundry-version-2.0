@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-@section('title','Transaction | Laundry Application')
+@section('title','Report Month | Laundry Application')
 @section('css')
 <link href="{{asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
@@ -13,29 +13,18 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">{{$page_title}}</h4>
+                    <h4 class="mb-sm-0 font-size-18">Report <i class="fas fa-money-check-alt    "></i></h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item active">{{$page_sub_title}}</li>
+                            <li class="breadcrumb-item active">Report <i class="fas fa-money-check-alt    "></i></li>
                         </ol>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-8">
-                
-            </div>
-            <div class="col-4">
-                
-                <a href="{{url('admin/transaction/category/baru')}}" class="btn btn-danger">Baru</a>
-                <a href="{{url('admin/transaction/category/proses')}}" class="btn btn-info">Proses</a>
-                <a href="{{url('admin/transaction/category/selesai')}}" class="btn btn-success">Selesai</a>
-                <a href="{{url('admin/transaction/category/diambil')}}" class="btn btn-secondary">Di ambil</a>
-            </div>
-        </div>
+        
         <br>
         @if ($message = Session::get('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -46,75 +35,67 @@
         @endif
         <br>
         <div class="row">
+            <form action="{{url('admin/report/day/search')}}" method="GET" enctype="multipart/form-data">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form class="navbar-form navbar-right" role="search" action="{{url('admin/report/month')}}">
+                                        <div class="input-group">
+                                    <select class="form-control" name="bulan" data-placeholder="Choose a Category" tabindex="1">
+                                        <option disabled selected>--Select by month-- </option>
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                        <button class="btn btn-success " type="submit"><i class="fa fa-search"></i>
+                    
+                    
+                                    </button>
+                                    </div>
+                                        
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-
-                        
-
                         <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                             <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Invoice Code</th>
-                                <th>Member</th>
                                 <th>Date</th>
-                                <th>Pay Date</th>
-                                <th>Deadline</th>
-                                <th>User</th>
-                                <th>Status</th>
-                                <th>Paid</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
 
 
                             <tbody>
-                                @foreach ($transaction as $row)
-                                <tr>
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>{{$row->invoice_code}}</td>
-                                    <td>{{$row->member_name}}</td>
-                                    <td>{{$row->date}}</td>
-                                    <td>{{$row->pay_date}}</td>
-                                    <td>{{$row->deadline}}</td>
-                                    <td>{{$row->user_name}}</td>
-                                    @if ($row->status == "baru")
-                                        <td><span class="badge rounded-pill bg-primary">Baru</span></td>
-                                    @elseif($row->status == "proses")
-                                        <td><span class="badge rounded-pill bg-primary">Proses</span></td>
-                                    @elseif($row->status == "selesai")
-                                        <td><span class="badge rounded-pill bg-primary">Selesai</span></td>
-                                    @elseif($row->status == "diambil")
-                                        <td><span class="badge rounded-pill bg-primary">Di Ambil</span></td>
-                                    @endif
-                                    @if ($row->paid == "belum_dibayar")
-                                        <td><span class="badge rounded-pill bg-warning">Belum Di Bayar</span></td>
-                                    @else
-                                        <td><span class="badge rounded-pill bg-primary">Di Bayar</span></td>
-                                    @endif
-                                    <td>
-                                        <a href="{{url('admin/transaction/baru/edit/'.$row->id)}}" class="btn btn-success btn-rounded waves-effect waves-light">
-                                            Edit
-                                         </a>
-                                        @if ($row->paid == "belum_dibayar")
-                                         
-                                        @else
-                                        <a target="_blank" href="{{url('admin/transaction/print/invoice/'.$row->id)}}" class="btn btn-warning btn-rounded waves-effect waves-light">
-                                            Print
-                                         </a>
-                                        @endif
-                                        {{-- @if (row->paid == "belum_dibayar")
-                                        
-                                        @else
-
-                                        <a target="_blank" href="{{url('admin/transaction/print/invoice/'.$row->id)}}" class="btn btn-warning btn-rounded waves-effect waves-light">
-                                           Print
-                                        </a>
-                                        @endif --}}
-                                    </td>
-                                </tr>
-                                @endforeach
+                                @foreach ($data as $item)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$item->invoice_code}}</td>
+                                        <td>{{$item->date}}</td>
+                                    </tr>
+                                @endforeach    
                             </tbody>
                         </table>
 

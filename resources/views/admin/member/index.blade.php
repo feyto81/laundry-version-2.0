@@ -94,9 +94,9 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <div align="right">
+                        {{-- <div align="right">
                             {{$member->links() }}
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

@@ -15,11 +15,14 @@ class CreateTransactionDetailTable extends Migration
     {
         Schema::create('transaction_detail', function (Blueprint $table) {
             $table->id();
-            $table->foreign('transaction_id')->references('id')->on('transaction');
-            $table->unsignedBigInteger('transaction_id');
+            $table->string('invoice_code');
             $table->foreign('paket_id')->references('id')->on('paket');
             $table->unsignedBigInteger('paket_id');
-            $table->integer('qty');
+            $table->foreign('outlet_id')->references('id')->on('outlet');
+            $table->unsignedBigInteger('outlet_id');
+            $table->date('pay_date');
+            $table->date('deadline');
+            $table->integer('weight');
             $table->text('keterangan');
             $table->timestamps();
         });

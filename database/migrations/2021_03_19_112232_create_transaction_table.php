@@ -15,17 +15,17 @@ class CreateTransactionTable extends Migration
     {
         Schema::create('transaction', function (Blueprint $table) {
             $table->id();
-            $table->foreign('outlet_id')->references('id')->on('outlet');
-            $table->unsignedBigInteger('outlet_id');
+            $table->string('invoice_code');
+            $table->date('date');
             $table->foreign('member_id')->references('id')->on('member');
             $table->unsignedBigInteger('member_id');
-            $table->dateTime('date');
-            $table->dateTime('pay_date');
             $table->integer('additional_cost');
             $table->integer('discon');
             $table->integer('tax');
             $table->enum('status', ['baru', 'proses', 'selesai', 'diambil']);
             $table->enum('paid', ['dibayar', 'belum_dibayar']);
+            $table->string('sub_total');
+            $table->string('pay_total');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
