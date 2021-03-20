@@ -9,6 +9,7 @@ use App\Models\Paket;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Auth;
 
 class DashboardController extends Controller
 {
@@ -21,6 +22,13 @@ class DashboardController extends Controller
         $data['paket'] = Paket::all()->count();
         $data['transaction'] = Transaction::all()->count();
         $data['user'] = User::all()->count();
+        $data['diambil'] = Transaction::where('status', '=', 'diambil')->count();
+        $data['baru'] = Transaction::where('status', '=', 'baru')->count();
+        $data['proses'] = Transaction::where('status', '=', 'proses')->count();
+        $data['selesai'] = Transaction::where('status', '=', 'selesai')->count();
+        $data['transaction_list'] = Transaction::latest()->get();
         return view('admin.dashboard.index', $data);
+        // $role = Auth::user()->hasRole('Kasir');
+        // dd($role);
     }
 }

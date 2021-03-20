@@ -1,5 +1,11 @@
 @extends('admin.layouts.main')
 @section('title','Dashboard | Laundry Application')
+@section('css')
+<link href="{{asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+@endsection
 @section('content')
 <div class="page-content">
     <div class="container-fluid">
@@ -159,9 +165,149 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="card mini-stats-wid">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="text-muted fw-medium">Take orders</p>
+                                        <h4 class="mb-0">{{$diambil}}</h4>
+                                    </div>
+
+                                    <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
+                                        <span class="avatar-title rounded-circle bg-primary">
+                                            <i class="bx bx-cart font-size-24"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                <p class="text-muted fw-medium">Orders Processed</p>
+                                <h4 class="mb-0">{{$proses}}</h4>
+                            </div>
+
+                            <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
+                                <span class="avatar-title rounded-circle bg-primary">
+                                    <i class="bx bx-cart font-size-24"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                <p class="text-muted fw-medium">Order Completed</p>
+                                <h4 class="mb-0">{{$selesai}}</h4>
+                            </div>
+
+                            <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
+                                <span class="avatar-title rounded-circle bg-primary">
+                                    <i class="bx bx-cart font-size-24"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                <p class="text-muted fw-medium">New Orders</p>
+                                <h4 class="mb-0">{{$baru}}</h4>
+                            </div>
+
+                            <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
+                                <span class="avatar-title rounded-circle bg-primary">
+                                    <i class="bx bx-cart font-size-24"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        @if(Auth::user()->hasRole('Administrator'))
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="card-body">
+                        <h4 class="card-title">Latest Order Transaction</h4>
+                        <br>
+                        <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Invoice Code</th>
+                                <th>Member</th>
+                                <th>Date</th>
+                                <th>User</th>
+                                <th>Status</th>
+                                <th>Paid</th>
+                                
+                            </tr>
+                            </thead>
+
+
+                            <tbody>
+                                @foreach ($transaction_list as $row)
+                                <tr>
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{$row->invoice_code}}</td>
+                                    <td>{{$row->Member->name}}</td>
+                                    <td>{{$row->date}}</td>
+                                    <td>{{$row->User->name}}</td>
+                                    @if ($row->status == "baru")
+                                        <td><span class="badge rounded-pill bg-primary">Baru</span></td>
+                                    @elseif($row->status == "proses")
+                                        <td><span class="badge rounded-pill bg-primary">Proses</span></td>
+                                    @elseif($row->status == "selesai")
+                                        <td><span class="badge rounded-pill bg-primary">Selesai</span></td>
+                                    @elseif($row->status == "diambil")
+                                        <td><span class="badge rounded-pill bg-primary">Di Ambil</span></td>
+                                    @endif
+                                    @if ($row->paid == "belum_dibayar")
+                                        <td><span class="badge rounded-pill bg-warning">Belum Di Bayar</span></td>
+                                    @else
+                                        <td><span class="badge rounded-pill bg-primary">Di Bayar</span></td>
+                                    @endif
+                                   
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 </div>
 @endsection
+@push('script')
+<script src="{{asset('assets/libs/select2/js/select2.min.js')}}"></script>
+<script src="{{asset('assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{asset('assets/libs/spectrum-colorpicker2/spectrum.min.js')}}"></script>
+<script src="{{asset('assets/libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
+<script src="{{asset('assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js')}}"></script>
+<script src="{{asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
+<script src="{{asset('assets/libs/%40chenfengyuan/datepicker/datepicker.min.js')}}"></script>
+<script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
+@endpush

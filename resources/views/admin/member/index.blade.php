@@ -43,11 +43,11 @@
                 <div class="card">
                    
                     <div class="card-body">
-                        <button style="margin-bottom: 10px" class="btn btn-primary delete_all" data-url="{{ url('myproductsDeleteAll') }}">Delete All Selected</button>
-                        <table class="table table-bordered dt-responsive  nowrap w-100">
+                        {{-- <button style="margin-bottom: 10px" class="btn btn-primary delete_all" data-url="{{ url('myproductsDeleteAll') }}">Delete All Selected</button> --}}
+                        <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                             <thead>
                             <tr>
-                                <th width="50px"><input type="checkbox" id="master"></th>
+                                {{-- <th width="50px"><input type="checkbox" id="master"></th> --}}
                                 <th>No</th>
                                 <th>Name</th>
                                 <th>Address</th>
@@ -56,14 +56,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                                @if ($member->count() == 0)
-                                <tr>
-                                    <td colspan="5">No member to display.</td>
-                                </tr>
-                                @endif
+                               
                                 @foreach ($member as $row)
                                 <tr>
-                                    <td><input type="checkbox" class="sub_chk" data-id="{{$row->id}}"></td>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$row->name}}</td>
                                     <td>{{$row->address}}</td>

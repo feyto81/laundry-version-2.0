@@ -28,6 +28,7 @@ Route::get('/', function () {
 
 Route::get('admin/login', [LoginController::class, 'showFormLogin'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => ['role:Administrator'], 'prefix' => 'admin'], function () {
         Route::resource('dashboard', DashboardController::class);
@@ -75,7 +76,61 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('transaction/category/selesai', [TransactionController::class, 'selesai']);
         Route::get('transaction/category/diambil', [TransactionController::class, 'diambil']);
 
-        Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+        // Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+        Route::get('report/day', [ReportController::class, 'day']);
+        Route::get('report/day/search', [ReportController::class, 'day_search']);
+        Route::get('report/day/cetakpdf', [ReportController::class, 'day_pdf']);
+
+        Route::get('report/month', [ReportController::class, 'month']);
+        Route::get('report/month/search', [ReportController::class, 'month_search']);
+        Route::get('report/month/cetakpdf', [ReportController::class, 'month_pdf']);
+
+        Route::get('report/year', [ReportController::class, 'year']);
+        Route::get('report/year/search', [ReportController::class, 'year_search']);
+        Route::get('report/year/cetakpdf', [ReportController::class, 'year_pdf']);
+    });
+    Route::group(['middleware' => ['role:Kasir|Administrator'], 'prefix' => 'admin'], function () {
+        Route::resource('dashboard', DashboardController::class);
+        Route::resource('member', MemberController::class);
+        Route::get('member/delete/{id}', [MemberController::class, 'destroy']);
+        Route::delete('member/deleteAll', [MemberController::class, 'deleteAll']);
+        Route::get('member/edit/{id}', [MemberController::class, 'edit']);
+        Route::post('member/update/{id}', [MemberController::class, 'update']);
+        Route::resource('transaction', TransactionController::class);
+        Route::get('transaction/getcart/response', [TransactionController::class, 'getCart'])->name('getCart');
+        Route::post('transaction/savecart/response', [TransactionController::class, 'saveCart'])->name('savecart');
+        Route::get('transaction/delete-cart/response/{cart_id}', [TransactionController::class, 'delete_cart']);
+        Route::post('transaction/sale', [TransactionController::class, 'kirimsemua'])->name('kirimsemua');
+        Route::get('transaction/print/invoice/{id}', [TransactionController::class, 'print']);
+        Route::get('transaction/edit/{id}', [TransactionController::class, 'edit']);
+        Route::post('transaction/update/{id}', [TransactionController::class, 'update']);
+        Route::get('transaction/baru/edit/{id}', [TransactionController::class, 'edit']);
+        Route::post('transaction/baru/update/{id}', [TransactionController::class, 'update']);
+        Route::get('transaction/proses/edit/{id}', [TransactionController::class, 'edit']);
+        Route::post('transaction/proses/update/{id}', [TransactionController::class, 'update']);
+        Route::get('transaction/selesai/edit/{id}', [TransactionController::class, 'edit']);
+        Route::post('transaction/selesai/update/{id}', [TransactionController::class, 'update']);
+        Route::get('transaction/diambil/edit/{id}', [TransactionController::class, 'edit']);
+        Route::post('transaction/diambil/update/{id}', [TransactionController::class, 'update']);
+        Route::get('transaction/category/baru', [TransactionController::class, 'baru']);
+        Route::get('transaction/category/proses', [TransactionController::class, 'proses']);
+        Route::get('transaction/category/selesai', [TransactionController::class, 'selesai']);
+        Route::get('transaction/category/diambil', [TransactionController::class, 'diambil']);
+        Route::get('report/day', [ReportController::class, 'day']);
+        Route::get('report/day/search', [ReportController::class, 'day_search']);
+        Route::get('report/day/cetakpdf', [ReportController::class, 'day_pdf']);
+
+        Route::get('report/month', [ReportController::class, 'month']);
+        Route::get('report/month/search', [ReportController::class, 'month_search']);
+        Route::get('report/month/cetakpdf', [ReportController::class, 'month_pdf']);
+
+        Route::get('report/year', [ReportController::class, 'year']);
+        Route::get('report/year/search', [ReportController::class, 'year_search']);
+        Route::get('report/year/cetakpdf', [ReportController::class, 'year_pdf']);
+    });
+    Route::group(['middleware' => ['role:Owner|Kasir|Administrator'], 'prefix' => 'admin'], function () {
+        Route::resource('dashboard', DashboardController::class);
 
         Route::get('report/day', [ReportController::class, 'day']);
         Route::get('report/day/search', [ReportController::class, 'day_search']);

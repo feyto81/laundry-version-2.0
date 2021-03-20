@@ -37,17 +37,8 @@
                                     <span key="t-dashboards">Dashboard</span>
                                 </a>
                             </li>
+                            @if(Auth::user()->hasROle(['Administrator','Kasir']))
                             <li class="menu-title" key="t-menu">Manajemen</li>
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="bx bx-store-alt"></i>
-                                    <span key="t-crypto">Outlet</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="{{route('outlet.create')}}" key="t-wallet">Add New Outlet</a></li>
-                                    <li><a href="{{route('outlet.index')}}" key="t-buy">List Outlet</a></li>
-                                </ul>
-                            </li>
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="bx bx-group"></i>
@@ -58,6 +49,19 @@
                                     <li><a href="{{route('member.index')}}" key="t-buy">List Member</a></li>
                                 </ul>
                             </li>
+                            @endif
+                            @if(Auth::user()->hasRole(['Administrator']))
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-store-alt"></i>
+                                    <span key="t-crypto">Outlet</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{route('outlet.create')}}" key="t-wallet">Add New Outlet</a></li>
+                                    <li><a href="{{route('outlet.index')}}" key="t-buy">List Outlet</a></li>
+                                </ul>
+                            </li>
+                            
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="bx bx-book-content"></i>
@@ -68,6 +72,8 @@
                                     <li><a href="{{route('paket.index')}}" key="t-buy">List Paket</a></li>
                                 </ul>
                             </li>
+                            @endif
+                            @if(Auth::user()->hasRole(['Administrator', 'Kasir']))
                             <li class="menu-title">Navigation</li>
                             
                             <li>
@@ -80,6 +86,8 @@
                                     <li><a href="{{route('transaction.index')}}" key="t-buy">Order List</a></li>
                                 </ul>
                             </li>
+                            @endif
+                            @if(Auth::user()->hasRole(['Administrator','Kasir','Owner']))
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
                                     <i class="bx bx-tone"></i>
@@ -91,6 +99,8 @@
                                     <li><a href="{{url('admin/report/year')}}" key="t-buy">Year</a></li>
                                 </ul>
                             </li>
+                            @endif
+                           @if(Auth::user()->hasRole('Administrator'))
                             <li class="menu-title" key="t-menu">Administrator</li>
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -102,12 +112,13 @@
                                     <li><a href="{{route('cms_users.index')}}" key="t-buy">List User</a></li>
                                 </ul>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="#" class="waves-effect">
                                     <i class="bx bx-calendar"></i>
                                     <span key="t-transactions">Log Activity</span>
                                 </a>
-                            </li>
+                            </li> --}}
+                            @endif
                         </ul>
                     </div>
                 </div>

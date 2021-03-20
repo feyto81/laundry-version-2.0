@@ -269,7 +269,7 @@
                                             <td>
                                                 <div class="col-md-10">
                                                     <select class="form-select" id="member_id" name="member_id">
-                                                        <option value="non_member">Non Member</option>
+                                                        
                                                         @foreach ($member as $members)
                                                         <option value="{{$members->id}}">{{$members->name}}</option>
                                                         @endforeach
@@ -639,7 +639,7 @@ $('.member').on('change', function() {
             var result_tax = $('#result_tax').val();
             var discount = $('#discount').val();
            
-            var pay_total = parseInt(result_tax) * parseInt(discount) / 100;
+            var pay_total = parseInt(result_tax) - parseInt(discount);
             $('#pay_total').val(pay_total);
             $('#result_discount').val(pay_total);
            
