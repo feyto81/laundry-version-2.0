@@ -60,6 +60,12 @@
                                             <input class="form-control" type="text" id="name" name="name" value="{{old('name')}}">
                                         </div>
                                     </div>
+                                    <div class="mb-3 row">
+                                        <label for="name" class="col-md-2 col-form-label">Email</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" type="email" id="email" name="email" value="{{old('email')}}">
+                                        </div>
+                                    </div>
                                     
                                     <div class="mb-3 row">
                                         <label for="phone_number" class="col-md-2 col-form-label">Phone Number</label>

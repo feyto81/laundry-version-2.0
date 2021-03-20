@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Member;
+use Auth;
 
 class MemberController extends Controller
 {
@@ -11,7 +12,7 @@ class MemberController extends Controller
     {
         $data['page_title'] = "Member";
         $data['page_sub_title'] = "Member";
-        $data['member'] = Member::paginate(1);
+        $data['member'] = Member::all();
         return view('admin.member.index', $data);
     }
 
@@ -27,13 +28,20 @@ class MemberController extends Controller
             'name' => 'required|min:2|max:20',
             'address' => 'required|min:2|max:20',
             'phone_number' => 'required|min:2|max:20',
+            'email' => 'required',
         ]);
+        $user_id = Auth::user()->id;
         $member = new Member;
         $member->name = $request->name;
+        $member->email = $request->email;
         $member->address = $request->address;
         $member->phone_number = $request->phone_number;
         $member->gender = $request->gender;
         $member->save();
+        // \LogActivity::addToLog([
+        //     'data' => 'Menambahkan Member ' . $request->name,
+        //     'user' => $user_id,
+        // ]);
         if ($request->submit == "more") {
             return redirect()->route('member.create')->with(['success' => 'Member has been saved !']);
         } else {
@@ -44,6 +52,11 @@ class MemberController extends Controller
     public function destroy($id)
     {
         $member = Member::findOrFail($id);
+        $user_id = Auth::user()->id;
+        // \LogActivity::addToLog([
+        //     'data' => 'Menghapus Member',
+        //     'user' => $user_id,
+        // ]);
         $member->delete();
         return redirect()->back()->with(['success' => 'Member has been deleted']);
     }
@@ -62,13 +75,20 @@ class MemberController extends Controller
             'address' => 'required|min:2|max:20',
             'phone_number' => 'required|min:2|max:20',
             'gender' => 'required',
+            'email' => 'required',
         ]);
+        $user_id = Auth::user()->id;
         $member = Member::findOrFail($id);
         $member->name = $request->name;
+        $member->email = $request->email;
         $member->address = $request->address;
         $member->phone_number = $request->phone_number;
         $member->gender = $request->gender;
         $result = $member->save();
+        \LogActivity::addToLog([
+            'data' => 'Mengupdate Member ' . $request->name,
+            'user' => $user_id,
+        ]);
         // dd($user);
         if ($result) {
             return redirect()->route('member.index')->with(['success' => 'Member has been updated']);

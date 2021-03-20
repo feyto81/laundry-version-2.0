@@ -4,6 +4,7 @@ use App\Http\Controllers\CmsUsersController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LogAcivityController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OutletController;
 use App\Http\Controllers\PaketController;
@@ -28,7 +29,7 @@ Route::get('/', function () {
 
 Route::get('admin/login', [LoginController::class, 'showFormLogin'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
-Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('logout', [LoginController::class, 'logout'])->name('logoutt');
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => ['role:Administrator'], 'prefix' => 'admin'], function () {
         Route::resource('dashboard', DashboardController::class);
@@ -89,6 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('report/year', [ReportController::class, 'year']);
         Route::get('report/year/search', [ReportController::class, 'year_search']);
         Route::get('report/year/cetakpdf', [ReportController::class, 'year_pdf']);
+
+        Route::get('logactivity', [LogAcivityController::class, 'log']);
     });
     Route::group(['middleware' => ['role:Kasir|Administrator'], 'prefix' => 'admin'], function () {
         Route::resource('dashboard', DashboardController::class);

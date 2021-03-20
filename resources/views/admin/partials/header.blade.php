@@ -77,7 +77,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                <a href="{{route('logout')}}" class="btn btn-primary" >Logout</a>
+                <a href="{{route('logoutt')}}" class="btn btn-primary" >Logout</a>
                 {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                 </form> --}}

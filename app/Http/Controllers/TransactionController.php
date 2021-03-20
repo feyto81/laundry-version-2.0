@@ -10,6 +10,8 @@ use App\Models\Paket;
 use App\Models\Cart;
 use Auth;
 use DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailNotify;
 
 class TransactionController extends Controller
 {
@@ -120,6 +122,11 @@ class TransactionController extends Controller
                 'weight' => $s->weight,
             ]);
         }
+        // $member_idd = $request->member_id;
+        // $memberr = Member::find($member_idd);
+        // $member_email = $memberr->email;
+        // $member_name = $memberr->name;
+        // Mail::to($member_email)->send(new MailNotify($member_name));
         return redirect()->route('transaction.index')->with(['success' => 'Data has been saved']);
     }
 
@@ -140,7 +147,7 @@ class TransactionController extends Controller
             ->where('invoice_code', '=', $invoice_code)
             ->get();
 
-
+        // dd($transaction);
         return view('admin.transaction.print', compact('transaction', 'transaction_detail'));
     }
 

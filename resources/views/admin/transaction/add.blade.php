@@ -422,7 +422,7 @@
                 <button type="button" id="closeModalPaket" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body table-responsive">
-                <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                <table id="datatable1" class="table table-bordered dt-responsive  nowrap w-100">
                   <thead>
                     <tr>
                       <th>Outlet</th>
@@ -691,5 +691,6 @@ $('.member').on('change', function() {
            
         })
     });
+    $('#datatable1').DataTable();
 </script>
 @endpush

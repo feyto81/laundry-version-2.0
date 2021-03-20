@@ -61,6 +61,12 @@
                                         </div>
                                     </div>
                                     <div class="mb-3 row">
+                                        <label for="name" class="col-md-2 col-form-label">Email</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" type="email" id="email" name="email" value="{{$member->email}}">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
                                         <label for="phone_number" class="col-md-2 col-form-label">Phone Number</label>
                                         <div class="col-md-10">
                                             <input class="form-control" type="number" id="phone_number" name="phone_number" value="{{$member->phone_number}}">

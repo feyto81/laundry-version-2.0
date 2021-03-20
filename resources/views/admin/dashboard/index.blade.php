@@ -280,6 +280,19 @@
                 <div class="card">
                     
                     <div class="card-body">
+                        <h4 class="card-title">Monthly Income Graph</h4>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <canvas class="embed-responsive-item" id="myChart"></canvas>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="card-body">
                         <h4 class="card-title">Latest Order Transaction</h4>
                         <br>
                         <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
@@ -338,6 +351,12 @@ foreach ($tahun as $row) {
     $pendapatan1[] = $row->pay_total;
     }    
 ?>
+<?php
+foreach ($data1 as $item) {
+    $bulan[] = $item->Bulan;
+    $pendapatan[] = $item->Pendapatan;
+    }    
+?>
 @endsection
 @push('script')
 <script src="{{asset('assets/libs/select2/js/select2.min.js')}}"></script>
@@ -357,8 +376,48 @@ foreach ($tahun as $row) {
 
           labels: <?php echo json_encode($th)?>,
           datasets: [{
-              label: '# p',
+              label: 'Income',
               data: <?php echo json_encode($pendapatan1)?>,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+</script>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+
+          labels: <?php echo json_encode($bulan)?>,
+          datasets: [{
+              label: 'Income',
+              data: <?php echo json_encode($pendapatan)?>,
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',

@@ -113,12 +113,12 @@
                                     <li><a href="{{route('cms_users.index')}}" key="t-buy">List User</a></li>
                                 </ul>
                             </li>
-                            {{-- <li>
-                                <a href="#" class="waves-effect">
+                            <li>
+                                <a href="{{url('admin/logactivity')}}" class="waves-effect">
                                     <i class="bx bx-calendar"></i>
                                     <span key="t-transactions">Log Activity</span>
                                 </a>
-                            </li> --}}
+                            </li>
                             @endif
                         </ul>
                     </div>

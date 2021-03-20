@@ -32,7 +32,10 @@ class DashboardController extends Controller
         $tahun = DB::table("transaction")->select(DB::raw('EXTRACT(YEAR FROM date) AS Tahun, SUM(pay_total) as pay_total'))
             ->groupBy(DB::raw('EXTRACT(YEAR FROM date)'))
             ->get();
-        return view('admin.dashboard.index', $data, compact('tahun'));
+        $data1 = DB::table("transaction")->select(DB::raw('EXTRACT(MONTH FROM date) AS Bulan, SUM(pay_total) as Pendapatan'))
+            ->groupBy(DB::raw('EXTRACT(MONTH FROM date)'))
+            ->get();
+        return view('admin.dashboard.index', $data, compact('tahun', 'data1'));
         // $role = Auth::user()->hasRole('Kasir');
         // dd($role);
     }

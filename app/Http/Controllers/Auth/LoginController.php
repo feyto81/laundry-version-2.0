@@ -66,9 +66,14 @@ class LoginController extends Controller
         if (auth()->attempt($data)) {
             $username = auth()->user()->username;
             $status = auth()->user()->status;
-
+            $ldate = date('Y-m-d H:i:s');
+            $user_id = Auth::user()->id;
             if ($status == 1) {
                 if (auth()->user()->hasRole('Administrator')) {
+                    \LogActivity::addToLog([
+                        'data' => 'User ' . $request->username . ' Login Pada ' . $ldate,
+                        'user' => $user_id,
+                    ]);
                     return redirect()->route('dashboard.index')->with(['success' => 'Welcome back ' . $username]);
                 }
                 return redirect()->route('dashboard.index')->with(['success' => 'Welcome back ' . $username]);
@@ -86,6 +91,15 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+
+
+        $username = Auth::user()->name;
+        $user_id = Auth::user()->id;
+        $ldate = date('Y-m-d H:i:s');
+        \LogActivity::addToLog([
+            'data' => 'User ' . $username . ' Logout Pada ' . $ldate,
+            'user' => $user_id,
+        ]);
         Auth::logout();
         Session::flush();
         $this->guard()->logout();
