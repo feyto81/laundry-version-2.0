@@ -64,7 +64,7 @@
                                         <br>
                                     </div>
                                     <div class="mt-4">
-                                        <a href="" class="btn btn-primary waves-effect waves-light btn-sm">View Profile <i class="mdi mdi-arrow-right ms-1"></i></a>
+                                        {{-- <a href="" class="btn btn-primary waves-effect waves-light btn-sm">View Profile <i class="mdi mdi-arrow-right ms-1"></i></a> --}}
                                     </div>
                                 </div>
                             </div>
@@ -223,6 +223,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="col-md-4">
                 <div class="card mini-stats-wid">
                     <div class="card-body">
@@ -241,8 +242,39 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                <p class="text-muted fw-medium">Income</p>
+                                <h4 class="mb-0">@currency($income)</h4>
+                            </div>
+
+                            <div class="avatar-sm rounded-circle bg-primary align-self-center mini-stat-icon">
+                                <span class="avatar-title rounded-circle bg-primary">
+                                    <i class="bx bx-dollar-circle font-size-24"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         @if(Auth::user()->hasRole('Administrator'))
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    
+                    <div class="card-body">
+                        <h4 class="card-title">Annual Income Graph</h4>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <canvas class="embed-responsive-item" id="myChartt"></canvas>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -300,6 +332,12 @@
         @endif
     </div>
 </div>
+<?php
+foreach ($tahun as $row) {
+    $th[] = $row->Tahun;
+    $pendapatan1[] = $row->pay_total;
+    }    
+?>
 @endsection
 @push('script')
 <script src="{{asset('assets/libs/select2/js/select2.min.js')}}"></script>
@@ -310,4 +348,45 @@
 <script src="{{asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
 <script src="{{asset('assets/libs/%40chenfengyuan/datepicker/datepicker.min.js')}}"></script>
 <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"> </script>
+<script>
+     var ctx = document.getElementById('myChartt').getContext('2d');
+      var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+
+          labels: <?php echo json_encode($th)?>,
+          datasets: [{
+              label: '# p',
+              data: <?php echo json_encode($pendapatan1)?>,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
+  });
+</script>
 @endpush

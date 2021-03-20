@@ -10,6 +10,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use DB;
 
 class DashboardController extends Controller
 {
@@ -27,7 +28,11 @@ class DashboardController extends Controller
         $data['proses'] = Transaction::where('status', '=', 'proses')->count();
         $data['selesai'] = Transaction::where('status', '=', 'selesai')->count();
         $data['transaction_list'] = Transaction::latest()->get();
-        return view('admin.dashboard.index', $data);
+        $data['income'] = DB::table('transaction')->sum('pay_total');
+        $tahun = DB::table("transaction")->select(DB::raw('EXTRACT(YEAR FROM date) AS Tahun, SUM(pay_total) as pay_total'))
+            ->groupBy(DB::raw('EXTRACT(YEAR FROM date)'))
+            ->get();
+        return view('admin.dashboard.index', $data, compact('tahun'));
         // $role = Auth::user()->hasRole('Kasir');
         // dd($role);
     }

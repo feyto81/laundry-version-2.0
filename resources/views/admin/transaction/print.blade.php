@@ -145,7 +145,18 @@
 							{{$item->pay_total}}
 						</td>
 					</tr>
-					{{-- <tr>
+					<tr>
+						<td colspan="3">
+							
+						</td>
+						<td style="text-align: right;">
+							Cash
+						</td>
+						<td style="text-align: right;">
+							{{$item->dibayar}}
+						</td>
+                    </tr>
+					<tr>
 						<td colspan="3">
 							
 						</td>
@@ -153,9 +164,9 @@
 							Change
 						</td>
 						<td style="text-align: right;">
-							{{$item->remaining}}
+							{{$item->kembalian}}
 						</td>
-                    </tr> --}}
+                    </tr>
                     @endforeach
 					
 				</table>

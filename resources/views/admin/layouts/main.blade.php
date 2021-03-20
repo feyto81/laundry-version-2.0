@@ -10,6 +10,7 @@
         <meta name="author" />
         @include('admin.partials.css')
         @yield('css')
+        @toastr_css
     </head>
     <body data-sidebar="colored">
         <div id="preloader">
@@ -130,6 +131,8 @@
         </div>
         <div class="rightbar-overlay"></div>
         @include('admin.partials.script')
+        @toastr_js
+        @toastr_render
     </body>
     @stack('script')
 </html>

@@ -76,6 +76,25 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="mb-3 row">
+                                        <label for="status" class="col-md-2 col-form-label">Total</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" name="pay_total" id="pay_total" value="{{$transaction->pay_total}}">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="status" class="col-md-2 col-form-label">Cash</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" name="dibayar" id="dibayar" value="{{$transaction->dibayar}}">
+                                        </div>
+                                        <small></small>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="status" class="col-md-2 col-form-label">Change</label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" name="change" id="change" value="{{$transaction->kembalian}}">
+                                        </div>
+                                    </div>
                                     
                                 </div>
                             </div>
@@ -110,4 +129,14 @@
 <script src="{{asset('assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js')}}"></script>
 <script src="{{asset('assets/libs/%40chenfengyuan/datepicker/datepicker.min.js')}}"></script>
 <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
+<script>
+    $('document').ready(function(){
+    $('#dibayar').on('keyup', function() {
+        var pay_total = $('#pay_total').val();
+        var dibayar = $('#dibayar').val();
+        var change = parseInt(dibayar) - parseInt(pay_total);
+        $('#change').val(change);
+    })
+});
+</script>
 @endpush

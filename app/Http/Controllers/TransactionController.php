@@ -155,6 +155,8 @@ class TransactionController extends Controller
         $transaction = Transaction::find($id);
         $transaction->status = $request->status;
         $transaction->paid = $request->paid;
+        $transaction->dibayar = $request->dibayar;
+        $transaction->kembalian = $request->kembalian;
         $transaction->save();
         return redirect()->route('transaction.index')->with(['success' => 'Data has been updated']);
     }
