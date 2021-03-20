@@ -17,12 +17,13 @@ class TransactionController extends Controller
     {
         $data['page_title'] = "Order List";
         $data['page_sub_title'] = "Order List";
-        $transaction = DB::table('transaction')
-            ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
-            ->join('member', 'transaction.member_id', '=', 'member.id')
-            ->join('users', 'transaction.user_id', '=', 'users.id')
-            ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
-            ->get();
+        // $transaction = DB::table('transaction')
+        //     ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
+        //     ->join('member', 'transaction.member_id', '=', 'member.id')
+        //     ->join('users', 'transaction.user_id', '=', 'users.id')
+        //     ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
+        //     ->get();
+        $transaction = Transaction::all();
 
         return view('admin.transaction.index', $data, compact('transaction'));
     }
@@ -161,51 +162,56 @@ class TransactionController extends Controller
     public function baru(Request $request)
     {
         $url = $request->fullUrl();
-        $transaction = DB::table('transaction')
-            ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
-            ->join('member', 'transaction.member_id', '=', 'member.id')
-            ->join('users', 'transaction.user_id', '=', 'users.id')
-            ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
-            ->where('transaction.status', 'baru')
-            ->get();
+        // $transaction = DB::table('transaction')
+        //     ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
+        //     ->join('member', 'transaction.member_id', '=', 'member.id')
+        //     ->join('users', 'transaction.user_id', '=', 'users.id')
+        //     ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
+        //     ->where('transaction.status', 'baru')
+        //     ->get();
+        $transaction = Transaction::where('status', '=', 'baru')->get();
 
-        return view('admin.transaction.baru', compact('transaction', 'url'));
+        return view('admin.transaction.baru1', compact('transaction', 'url'));
     }
 
     public function proses()
     {
-        $transaction = DB::table('transaction')
-            ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
-            ->join('member', 'transaction.member_id', '=', 'member.id')
-            ->join('users', 'transaction.user_id', '=', 'users.id')
-            ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
-            ->where('transaction.status', 'proses')
-            ->get();
+        // $transaction = DB::table('transaction')
+        //     ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
+        //     ->join('member', 'transaction.member_id', '=', 'member.id')
+        //     ->join('users', 'transaction.user_id', '=', 'users.id')
+        //     ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
+        //     ->where('transaction.status', 'proses')
+        //     ->get();
+        $transaction = Transaction::where('status', '=', 'proses')->get();
 
-        return view('admin.transaction.baru', compact('transaction'));
+        return view('admin.transaction.proses', compact('transaction'));
     }
 
     public function selesai()
     {
-        $transaction = DB::table('transaction')
-            ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
-            ->join('member', 'transaction.member_id', '=', 'member.id')
-            ->join('users', 'transaction.user_id', '=', 'users.id')
-            ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
-            ->where('transaction.status', 'selesai')
-            ->get();
-        return view('admin.transaction.baru', compact('transaction'));
+        // $transaction = DB::table('transaction')
+        //     ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
+        //     ->join('member', 'transaction.member_id', '=', 'member.id')
+        //     ->join('users', 'transaction.user_id', '=', 'users.id')
+        //     ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
+        //     ->where('transaction.status', 'selesai')
+        //     ->get();
+        $transaction = Transaction::where('status', '=', 'selesai')->get();
+        return view('admin.transaction.selesai', compact('transaction'));
     }
 
     public function diambil()
     {
-        $transaction = DB::table('transaction')
-            ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
-            ->join('member', 'transaction.member_id', '=', 'member.id')
-            ->join('users', 'transaction.user_id', '=', 'users.id')
-            ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
-            ->where('transaction.status', 'diambil')
-            ->get();
-        return view('admin.transaction.baru', compact('transaction'));
+        // $transaction = DB::table('transaction')
+        //     ->join('transaction_detail', 'transaction.invoice_code', '=', 'transaction_detail.invoice_code')
+        //     ->join('member', 'transaction.member_id', '=', 'member.id')
+        //     ->join('users', 'transaction.user_id', '=', 'users.id')
+        //     ->select('transaction.*', 'transaction_detail.*', 'member.name as member_name', 'users.name as user_name')
+        //     ->where('transaction.status', 'diambil')
+        //     ->get();
+        $transaction = Transaction::where('status', '=', 'diambil')->get();
+
+        return view('admin.transaction.diambil', compact('transaction'));
     }
 }

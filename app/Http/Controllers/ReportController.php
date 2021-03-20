@@ -65,4 +65,57 @@ class ReportController extends Controller
         $data['data']   =   $query;
         return view('admin.report.month.index', $data);
     }
+
+    public function month_pdf()
+    {
+        $date1 = Request::get('date1');
+        $date2 = Request::get('date2');
+        $query = DB::table('transaction')
+            ->join('member', 'transaction.member_id', '=', 'member.id')
+            ->whereMonth('date', Request::get('bulan'))
+            ->select('transaction.*', 'member.name as member_name')
+            ->orderBy('invoice_code', 'asc')
+            ->get();
+
+        $data['data']   =   $query;
+        $view = view('admin.report.month.print_data', $data)->render();
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('Report Month Sale.pdf');
+    }
+
+    public function year()
+    {
+        $data = DB::table('transaction')
+            ->get();
+        return view('admin.report.year.index', compact('data'));
+    }
+
+    public function year_search()
+    {
+        $query = DB::table('transaction')->whereYear('date', Request::get('tahun'))
+            ->orderBy('invoice_code', 'desc')
+            ->get();
+
+        $data['data']   =   $query;
+        return view('admin.report.year.index', $data);
+    }
+
+    public function year_pdf()
+    {
+
+        $query = DB::table('transaction')
+            ->join('member', 'transaction.member_id', '=', 'member.id')
+            ->whereYear('date', Request::get('tahun'))
+            ->select('transaction.*', 'member.name as member_name')
+
+            ->orderBy('invoice_code', 'asc')
+            ->get();
+
+        $data['data']   =   $query;
+        $view = view('admin.report.year.print_data', $data)->render();
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('Report Year Sale.pdf');
+    }
 }

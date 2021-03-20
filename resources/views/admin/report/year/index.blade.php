@@ -1,5 +1,5 @@
 @extends('admin.layouts.main')
-@section('title','Transaction | Laundry Application')
+@section('title','Report Year | Laundry Application')
 @section('css')
 <link href="{{asset('assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
@@ -13,29 +13,18 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">{{$page_title}}</h4>
+                    <h4 class="mb-sm-0 font-size-18">Report <i class="fas fa-money-check-alt    "></i></h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item active">{{$page_sub_title}}</li>
+                            <li class="breadcrumb-item active">Report <i class="fas fa-money-check-alt    "></i></li>
                         </ol>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-8">
-                
-            </div>
-            <div class="col-4">
-                
-                <a href="{{url('admin/transaction/category/baru')}}" class="btn btn-danger">Baru</a>
-                <a href="{{url('admin/transaction/category/proses')}}" class="btn btn-info">Proses</a>
-                <a href="{{url('admin/transaction/category/selesai')}}" class="btn btn-success">Selesai</a>
-                <a href="{{url('admin/transaction/category/diambil')}}" class="btn btn-secondary">Di ambil</a>
-            </div>
-        </div>
+        
         <br>
         @if ($message = Session::get('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -47,6 +36,51 @@
         <br>
         <div class="row">
             <div class="col-12">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="navbar-form navbar-right" role="search" action="{{url('admin/report/year/search')}}">
+                                    <div class="input-group">
+                                <select class="form-control demoSelect" name="tahun" data-placeholder="Choose a Category" tabindex="1">
+                                    <option disabled selected>--Select Based Years-- </option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2027">2027</option>
+                                    <option value="2028">2028</option>
+                                    <option value="2029">2029</option>
+                                    <option value="2030">2030</option>
+                                    <option value="2031">2031</option>
+                                    <option value="2032">2032</option>
+                                    <option value="2033">2033</option>
+                                    <option value="2034">2034</option>
+                                    <option value="2035">2035</option>
+                                    <option value="2036">2036</option>
+                                </select>
+                                <button class="btn btn-success " type="submit"><i class="fa fa-search"></i>
+            
+            
+                            </button>
+                            </div>
+                                    
+                                </form>
+                                <br>
+                                <br>
+                                <a href="{{url('admin/report/year/cetakpdf?tahun='.Request::get('tahun'))}}" class="btn btn-warning" target="_blank">Export PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
@@ -54,60 +88,19 @@
                             <tr>
                                 <th>No</th>
                                 <th>Invoice Code</th>
-                                <th>Member</th>
                                 <th>Date</th>
-                                <th>User</th>
-                                <th>Status</th>
-                                <th>Paid</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
 
 
                             <tbody>
-                                @foreach ($transaction as $row)
-                                <tr>
-                                    <td>{{$loop->iteration}}</td>
-                                    <td>{{$row->invoice_code}}</td>
-                                    <td>{{$row->Member->name}}</td>
-                                    <td>{{$row->date}}</td>
-                                    <td>{{$row->User->name}}</td>
-                                    @if ($row->status == "baru")
-                                        <td><span class="badge rounded-pill bg-primary">Baru</span></td>
-                                    @elseif($row->status == "proses")
-                                        <td><span class="badge rounded-pill bg-primary">Proses</span></td>
-                                    @elseif($row->status == "selesai")
-                                        <td><span class="badge rounded-pill bg-primary">Selesai</span></td>
-                                    @elseif($row->status == "diambil")
-                                        <td><span class="badge rounded-pill bg-primary">Di Ambil</span></td>
-                                    @endif
-                                    @if ($row->paid == "belum_dibayar")
-                                        <td><span class="badge rounded-pill bg-warning">Belum Di Bayar</span></td>
-                                    @else
-                                        <td><span class="badge rounded-pill bg-primary">Di Bayar</span></td>
-                                    @endif
-                                    <td>
-                                        <a href="{{url('admin/transaction/edit/'.$row->id)}}" class="btn btn-success btn-rounded waves-effect waves-light">
-                                            Edit
-                                         </a>
-                                        @if ($row->paid == "belum_dibayar")
-                                         
-                                        @else
-                                        <a target="_blank" href="{{url('admin/transaction/print/invoice/'.$row->id)}}" class="btn btn-warning btn-rounded waves-effect waves-light">
-                                            Print
-                                         </a>
-                                        @endif
-                                        {{-- @if (row->paid == "belum_dibayar")
-                                        
-                                        @else
-
-                                        <a target="_blank" href="{{url('admin/transaction/print/invoice/'.$row->id)}}" class="btn btn-warning btn-rounded waves-effect waves-light">
-                                           Print
-                                        </a>
-                                        @endif --}}
-                                    </td>
-                                </tr>
-                                @endforeach
+                                @foreach ($data as $item)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$item->invoice_code}}</td>
+                                        <td>{{$item->date}}</td>
+                                    </tr>
+                                @endforeach    
                             </tbody>
                         </table>
 

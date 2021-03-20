@@ -44,7 +44,7 @@
                                     <div class="input-group">
                                 <select class="form-control" name="bulan" data-placeholder="Choose a Category" tabindex="1">
                                     <option disabled selected>--Select by month-- </option>
-                                    <option value="01">Januari</option>
+                                    <option value="01">January</option>
                                     <option value="02">Februari</option>
                                     <option value="03">Maret</option>
                                     <option value="04">April</option>
@@ -64,7 +64,9 @@
                                 </div>
                                     
                                 </form>
-                                
+                                <br>
+                                <br>
+                                <a href="{{url('admin/report/month/cetakpdf?bulan='.Request::get('bulan'))}}" class="btn btn-warning" target="_blank">Export PDF</a>
                             </div>
                         </div>
                     </div>

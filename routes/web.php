@@ -62,6 +62,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('transaction/print/invoice/{id}', [TransactionController::class, 'print']);
         Route::get('transaction/edit/{id}', [TransactionController::class, 'edit']);
         Route::post('transaction/update/{id}', [TransactionController::class, 'update']);
+        Route::get('transaction/baru/edit/{id}', [TransactionController::class, 'edit']);
+        Route::post('transaction/baru/update/{id}', [TransactionController::class, 'update']);
+        Route::get('transaction/proses/edit/{id}', [TransactionController::class, 'edit']);
+        Route::post('transaction/proses/update/{id}', [TransactionController::class, 'update']);
+        Route::get('transaction/selesai/edit/{id}', [TransactionController::class, 'edit']);
+        Route::post('transaction/selesai/update/{id}', [TransactionController::class, 'update']);
+        Route::get('transaction/diambil/edit/{id}', [TransactionController::class, 'edit']);
+        Route::post('transaction/diambil/update/{id}', [TransactionController::class, 'update']);
         Route::get('transaction/category/baru', [TransactionController::class, 'baru']);
         Route::get('transaction/category/proses', [TransactionController::class, 'proses']);
         Route::get('transaction/category/selesai', [TransactionController::class, 'selesai']);
@@ -76,5 +84,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('report/month', [ReportController::class, 'month']);
         Route::get('report/month/search', [ReportController::class, 'month_search']);
         Route::get('report/month/cetakpdf', [ReportController::class, 'month_pdf']);
+
+        Route::get('report/year', [ReportController::class, 'year']);
+        Route::get('report/year/search', [ReportController::class, 'year_search']);
+        Route::get('report/year/cetakpdf', [ReportController::class, 'year_pdf']);
     });
 });
